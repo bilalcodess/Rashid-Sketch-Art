@@ -21,7 +21,7 @@
   --shadow:    0 2px 16px rgba(0,0,0,0.06);
   --shadow-lg: 0 8px 32px rgba(0,0,0,0.08);
   --card-bg:   #ffffff;
-  --header-bg: rgba(255,255,255,0.92);
+  --header-bg: rgba(255,255,255,0.80);
   --radius:    10px;
   --rad-sm:    6px;
   --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
@@ -42,7 +42,7 @@
   --shadow:    0 2px 16px rgba(0,0,0,0.3);
   --shadow-lg: 0 8px 32px rgba(0,0,0,0.4);
   --card-bg:   #171717;
-  --header-bg: rgba(15,15,15,0.92);
+  --header-bg: rgba(15,15,15,0.80);
 }
 
 html { scroll-behavior: smooth; }
@@ -136,7 +136,7 @@ header, .hero, .card-body, .pd-info, .about-page, .about-stats {
 .mobile-menu {
   display: none;
   flex-direction: column;
-  background: var(--bg2);
+  background: transparent;
   padding: 16px;
   gap: 12px;
   border-top: 1px solid var(--border);

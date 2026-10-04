@@ -108,7 +108,7 @@ function createCard(p, small = false) {
     <div class="card-body">
       <div class="card-title">${p.title}</div>
       ${statsHtml}
-      <div class="card-price">â‚¹${p.price.toLocaleString('en-IN')}</div>
+      <div class="card-price">₹${p.price.toLocaleString('en-IN')}</div>
       <a class="card-buy-btn" href="${buildWaLink(p)}" target="_blank" onclick="event.stopPropagation()">BUY</a>
     </div>
   `;
@@ -137,7 +137,7 @@ function openProduct(id) {
   document.getElementById('pd-cat-label').textContent = p.category;
   document.getElementById('pd-cat-badge').textContent = p.category;
   document.getElementById('pd-cat-badge').className = `pd-badge ${getCatBadgeClass(p.category)}`;
-  document.getElementById('pd-price').textContent = `â‚¹${p.price.toLocaleString('en-IN')}`;
+  document.getElementById('pd-price').textContent = `₹${p.price.toLocaleString('en-IN')}`;
   document.getElementById('pd-wa-btn').href = buildWaLink(p);
 
   // Stats

@@ -244,6 +244,34 @@ if (savedTheme === 'dark') {
 
 
 
-function toggleMenu() { document.getElementById('mobile-menu').classList.toggle('open'); }
-function closeMenu() { document.getElementById('mobile-menu').classList.remove('open'); }
+let menuOpenTime = 0;
+function toggleMenu() { 
+  const menu = document.getElementById('mobile-menu');
+  menu.classList.toggle('open');
+  if (menu.classList.contains('open')) {
+    menuOpenTime = Date.now();
+  }
+}
+function closeMenu() { 
+  document.getElementById('mobile-menu').classList.remove('open'); 
+}
+
+window.addEventListener('scroll', () => {
+  if (Date.now() - menuOpenTime > 300) {
+    const menu = document.getElementById('mobile-menu');
+    if (menu && menu.classList.contains('open')) {
+      menu.classList.remove('open');
+    }
+  }
+}, { passive: true });
+
+document.addEventListener('click', (e) => {
+  if (Date.now() - menuOpenTime > 300) {
+    const menu = document.getElementById('mobile-menu');
+    const btn = document.getElementById('menu-btn');
+    if (menu && menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) {
+      menu.classList.remove('open');
+    }
+  }
+});
 

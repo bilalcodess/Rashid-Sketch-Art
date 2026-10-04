@@ -14,17 +14,19 @@
 <!-- ======= HEADER ======= -->
 <header id="header">
   <div class="header-inner">
-    <a href="#" class="logo" onclick="showPage('home')">
-      <span class="logo-icon">✦</span>
-      <span>Rashid Sketch Art</span>
-    </a>
-    <nav class="nav-links">
-      <a href="#" onclick="showPage('home')" id="nav-home" class="nav-link active">Home</a>
-      <a href="#" onclick="filterCategory('Masterpieces')" id="nav-master" class="nav-link">Masterpieces</a>
-      <a href="#" onclick="filterCategory('Most Liked')" id="nav-liked" class="nav-link">Most Liked</a>
-      <a href="#" onclick="filterCategory('Rising')" id="nav-rising" class="nav-link">Rising</a>
-      <a href="#" onclick="showPage('about')" id="nav-about" class="nav-link">About</a>
-    </nav>
+    <div class="header-left">
+      <a href="#" class="logo" onclick="showPage('home')">
+        <span class="logo-icon">✦</span>
+        <span>Rashid Sketch Art</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#" onclick="showPage('home')" id="nav-home" class="nav-link active">Home</a>
+        <a href="#" onclick="filterCategory('Masterpieces')" id="nav-master" class="nav-link">Masterpieces</a>
+        <a href="#" onclick="filterCategory('Most Liked')" id="nav-liked" class="nav-link">Most Liked</a>
+        <a href="#" onclick="filterCategory('Rising')" id="nav-rising" class="nav-link">Rising</a>
+        <a href="#" onclick="showPage('about')" id="nav-about" class="nav-link">About</a>
+      </nav>
+    </div>
     <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode" onclick="toggleTheme()">☾</button>
   </div>
 </header>
@@ -52,12 +54,6 @@
     <div class="section-header">
       <h2 class="section-title">The Collection</h2>
       <p class="section-sub">Every original painting by Rashid Sketch Art</p>
-    </div>
-    <div class="filter-tabs">
-      <button class="filter-tab active" id="tab-all" onclick="filterHome('all')">All</button>
-      <button class="filter-tab" id="tab-masterpieces" onclick="filterHome('Masterpieces')">Masterpieces</button>
-      <button class="filter-tab" id="tab-liked" onclick="filterHome('Most Liked')">Most Liked</button>
-      <button class="filter-tab" id="tab-rising" onclick="filterHome('Rising')">Rising</button>
     </div>
     <div class="product-grid" id="product-grid"></div>
   </section>

@@ -29,8 +29,8 @@ let currentFilter = 'all';
 function filterHome(cat) {
   currentFilter = cat;
   // Update tab buttons
-  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
-  const tabMap = { all: 'tab-all', Masterpieces: 'tab-masterpieces', 'Most Liked': 'tab-liked', Rising: 'tab-rising' };
+  document.querySelectorAll('.nav-link').forEach(t => t.classList.remove('active'));
+  const tabMap = { all: 'nav-home', Masterpieces: 'nav-master', 'Most Liked': 'nav-liked', Rising: 'nav-rising' };
   if (tabMap[cat]) document.getElementById(tabMap[cat]).classList.add('active');
   renderGrid('product-grid', cat);
 }
@@ -212,6 +212,7 @@ const savedTheme = localStorage.getItem('rsa_theme');
 if (savedTheme === 'dark') {
   document.documentElement.setAttribute('data-theme', 'dark');
 }
+
 
 
 

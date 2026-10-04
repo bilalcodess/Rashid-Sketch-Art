@@ -83,7 +83,8 @@ function buildWaLink(product) {
   const txt = encodeURIComponent(
     `Hi! I want to buy this painting: "${product.title}" priced at ₹${product.price.toLocaleString('en-IN')}. Can you confirm availability?`
   );
-  return `https://wa.me/${RSA_CONFIG.whatsapp}?text=${txt}`;
+  const number = product.whatsapp || RSA_CONFIG.whatsapp;
+  return `https://wa.me/${number}?text=${txt}`;
 }
 
 function createCard(p, small = false) {

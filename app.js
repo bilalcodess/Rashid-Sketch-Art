@@ -1,13 +1,13 @@
-/* ============================================================
-   RSA STORE – APPLICATION LOGIC
+﻿/* ============================================================
+   RSA STORE â€“ APPLICATION LOGIC
    ============================================================ */
 
 const YT_CACHE_KEY = 'rsa_yt_cache';
 const YT_CACHE_TTL = 30 * 60 * 1000; // 30 minutes
 
-// ──────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // ROUTING
-// ──────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function showPage(name) {
   document.getElementById('page-home').style.display    = name === 'home'    ? '' : 'none';
   document.getElementById('page-product').style.display = name === 'product' ? '' : 'none';
@@ -21,9 +21,9 @@ function showPage(name) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ──────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // PRODUCT GRID RENDERING
-// ──────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 let currentFilter = 'all';
 
 function filterHome(cat) {
@@ -81,7 +81,7 @@ function formatNumber(n) {
 
 function buildWaLink(product) {
   const txt = encodeURIComponent(
-    `Hi! I want to buy this painting: "${product.title}" priced at ₹${product.price.toLocaleString('en-IN')}. Can you confirm availability?`
+    `Hi! I want to buy this painting: "${product.title}" priced at â‚¹${product.price.toLocaleString('en-IN')}. Can you confirm availability?`
   );
   return `https://wa.me/${RSA_CONFIG.whatsapp}?text=${txt}`;
 }
@@ -93,7 +93,7 @@ function createCard(p, small = false) {
 
   const statsHtml = hasStats
     ? `<div class="card-yt-stats visible">
-        ${views ? `▶ ${views}` : ''}${views && likes ? ' &nbsp;·&nbsp; ' : ''}${likes ? `♥ ${likes}` : ''}
+        ${views ? `â–¶ ${views}` : ''}${views && likes ? ' &nbsp;Â·&nbsp; ' : ''}${likes ? `â™¥ ${likes}` : ''}
        </div>`
     : `<div class="card-yt-stats" id="yt-stats-${p.id}"></div>`;
 
@@ -107,7 +107,7 @@ function createCard(p, small = false) {
     <div class="card-body">
       <div class="card-title">${p.title}</div>
       ${statsHtml}
-      <div class="card-price">₹${p.price.toLocaleString('en-IN')}</div>
+      <div class="card-price">â‚¹${p.price.toLocaleString('en-IN')}</div>
       <a class="card-buy-btn" href="${buildWaLink(p)}" target="_blank" onclick="event.stopPropagation()">BUY</a>
     </div>
   `;
@@ -123,9 +123,9 @@ function renderGrid(containerId, filter = 'all') {
   list.forEach(p => container.appendChild(createCard(p)));
 }
 
-// ──────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // PRODUCT DETAIL
-// ──────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function openProduct(id) {
   const p = RSA_PRODUCTS.find(x => x.id === id);
   if (!p) return;
@@ -136,7 +136,7 @@ function openProduct(id) {
   document.getElementById('pd-cat-label').textContent = p.category;
   document.getElementById('pd-cat-badge').textContent = p.category;
   document.getElementById('pd-cat-badge').className = `pd-badge ${getCatBadgeClass(p.category)}`;
-  document.getElementById('pd-price').textContent = `₹${p.price.toLocaleString('en-IN')}`;
+  document.getElementById('pd-price').textContent = `â‚¹${p.price.toLocaleString('en-IN')}`;
   document.getElementById('pd-wa-btn').href = buildWaLink(p);
 
   // Stats
@@ -145,8 +145,8 @@ function openProduct(id) {
   const likes = formatNumber(p.likes);
   if (views || likes) {
     statsEl.style.display = 'flex';
-    document.getElementById('pd-views').textContent = views ? `▶ ${views} views` : '';
-    document.getElementById('pd-likes').textContent = likes ? `♥ ${likes} likes` : '';
+    document.getElementById('pd-views').textContent = views ? `â–¶ ${views} views` : '';
+    document.getElementById('pd-likes').textContent = likes ? `â™¥ ${likes} likes` : '';
   } else {
     statsEl.style.display = 'none';
   }
@@ -171,9 +171,9 @@ function openProduct(id) {
   showPage('product');
 }
 
-// ──────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // YOUTUBE STATS (FROM STATIC JSON)
-// ──────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function fetchYouTubeStats() {
   try {
     // We now simply read the stats.json file generated hourly by GitHub Actions
@@ -198,7 +198,7 @@ function applyStats(statsMap) {
         const v = formatNumber(p.views);
         const l = formatNumber(p.likes);
         if (v || l) {
-          el.innerHTML = `${v ? `▶ ${v}` : ''}${v && l ? ' &nbsp;·&nbsp; ' : ''}${l ? `♥ ${l}` : ''}`;
+          el.innerHTML = `${v ? `â–¶ ${v}` : ''}${v && l ? ' &nbsp;Â·&nbsp; ' : ''}${l ? `â™¥ ${l}` : ''}`;
           el.classList.add('visible');
         }
       }
@@ -206,20 +206,20 @@ function applyStats(statsMap) {
   });
 }
 
-// ──────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // INIT
-// ──────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 document.addEventListener('DOMContentLoaded', () => {
   const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
   const btn = document.getElementById('theme-toggle');
-  if (btn) btn.textContent = currentTheme === 'light' ? '☾' : '☀';
+  if (btn) btn.textContent = currentTheme === 'light' ? 'â˜¾' : 'â˜€';
   renderGrid('product-grid', 'all');
   fetchYouTubeStats();
 });
 
-// ──────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // THEME TOGGLE
-// ──────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function toggleTheme() {
   const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
   const newTheme = currentTheme === 'light' ? 'dark' : 'light';
@@ -228,7 +228,7 @@ function toggleTheme() {
   
   const btn = document.getElementById('theme-toggle');
   if(btn) {
-    btn.textContent = newTheme === 'light' ? '☾' : '☀';
+    btn.textContent = newTheme === 'light' ? 'â˜¾' : 'â˜€';
   }
 }
 
@@ -245,3 +245,5 @@ if (savedTheme === 'dark') {
 
 function toggleMenu() { document.getElementById('mobile-menu').classList.toggle('open'); }
 function closeMenu() { document.getElementById('mobile-menu').classList.remove('open'); }
+
+window.addEventListener('scroll', () => { const menu = document.getElementById('mobile-menu'); if (menu && menu.classList.contains('open')) { menu.classList.remove('open'); } }, { passive: true });

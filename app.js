@@ -1,0 +1,218 @@
+﻿/* ============================================================
+   RSA STORE – APPLICATION LOGIC
+   ============================================================ */
+
+const YT_CACHE_KEY = 'rsa_yt_cache';
+const YT_CACHE_TTL = 30 * 60 * 1000; // 30 minutes
+
+// ──────────────────────────────────────────────
+// ROUTING
+// ──────────────────────────────────────────────
+function showPage(name) {
+  document.getElementById('page-home').style.display    = name === 'home'    ? '' : 'none';
+  document.getElementById('page-product').style.display = name === 'product' ? '' : 'none';
+  document.getElementById('page-about').style.display   = name === 'about'   ? '' : 'none';
+
+  // Update nav active state
+  document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+  const navMap = { home: 'nav-home', about: 'nav-about' };
+  if (navMap[name]) document.getElementById(navMap[name])?.classList.add('active');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ──────────────────────────────────────────────
+// PRODUCT GRID RENDERING
+// ──────────────────────────────────────────────
+let currentFilter = 'all';
+
+function filterHome(cat) {
+  currentFilter = cat;
+  // Update tab buttons
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  const tabMap = { all: 'tab-all', Masterpieces: 'tab-masterpieces', 'Most Liked': 'tab-liked', Rising: 'tab-rising' };
+  if (tabMap[cat]) document.getElementById(tabMap[cat]).classList.add('active');
+  renderGrid('product-grid', cat);
+}
+
+function filterCategory(cat) {
+  showPage('home');
+  // Wait for home page to show, then filter
+  setTimeout(() => filterHome(cat), 50);
+}
+
+function getCatBadgeClass(cat) {
+  if (cat === 'Rising')     return 'rising';
+  if (cat === 'Most Liked') return 'liked';
+  return '';
+}
+
+function formatNumber(n) {
+  if (!n || n === 0) return null;
+  if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
+  if (n >= 1000)    return (n / 1000).toFixed(0) + 'K';
+  return n.toLocaleString('en-IN');
+}
+
+function buildWaLink(product) {
+  const txt = encodeURIComponent(
+    `Hi! I want to buy this painting: "${product.title}" priced at ₹${product.price.toLocaleString('en-IN')}. Can you confirm availability?`
+  );
+  return `https://wa.me/${RSA_CONFIG.whatsapp}?text=${txt}`;
+}
+
+function createCard(p, small = false) {
+  const views  = formatNumber(p.views);
+  const likes  = formatNumber(p.likes);
+  const hasStats = views || likes;
+
+  const statsHtml = hasStats
+    ? `<div class="card-yt-stats visible">
+        ${views ? `▶ ${views}` : ''}${views && likes ? ' &nbsp;·&nbsp; ' : ''}${likes ? `♥ ${likes}` : ''}
+       </div>`
+    : `<div class="card-yt-stats" id="yt-stats-${p.id}"></div>`;
+
+  const card = document.createElement('div');
+  card.className = 'product-card';
+  card.innerHTML = `
+    <div class="card-img-wrap">
+      <img src="${p.img}" alt="${p.title}" class="card-img" loading="lazy">
+      <span class="card-badge ${getCatBadgeClass(p.category)}">${p.category}</span>
+    </div>
+    <div class="card-body">
+      <div class="card-title">${p.title}</div>
+      ${statsHtml}
+      <div class="card-price">₹${p.price.toLocaleString('en-IN')}</div>
+      <a class="card-buy-btn" href="${buildWaLink(p)}" target="_blank" onclick="event.stopPropagation()">BUY</a>
+    </div>
+  `;
+  card.addEventListener('click', () => openProduct(p.id));
+  return card;
+}
+
+function renderGrid(containerId, filter = 'all') {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = '';
+  const list = filter === 'all' ? RSA_PRODUCTS : RSA_PRODUCTS.filter(p => p.category === filter);
+  list.forEach(p => container.appendChild(createCard(p)));
+}
+
+// ──────────────────────────────────────────────
+// PRODUCT DETAIL
+// ──────────────────────────────────────────────
+function openProduct(id) {
+  const p = RSA_PRODUCTS.find(x => x.id === id);
+  if (!p) return;
+
+  document.getElementById('pd-img').src         = p.img;
+  document.getElementById('pd-img').alt         = p.title;
+  document.getElementById('pd-title').textContent = p.title;
+  document.getElementById('pd-cat-label').textContent = p.category;
+  document.getElementById('pd-cat-badge').textContent = p.category;
+  document.getElementById('pd-cat-badge').className = `pd-badge ${getCatBadgeClass(p.category)}`;
+  document.getElementById('pd-price').textContent = `₹${p.price.toLocaleString('en-IN')}`;
+  document.getElementById('pd-wa-btn').href = buildWaLink(p);
+
+  // Stats
+  const statsEl = document.getElementById('pd-stats');
+  const views = formatNumber(p.views);
+  const likes = formatNumber(p.likes);
+  if (views || likes) {
+    statsEl.style.display = 'flex';
+    document.getElementById('pd-views').textContent = views ? `▶ ${views} views` : '';
+    document.getElementById('pd-likes').textContent = likes ? `♥ ${likes} likes` : '';
+  } else {
+    statsEl.style.display = 'none';
+  }
+
+  // YouTube video
+  const videoSection = document.getElementById('pd-video-section');
+  const iframe = document.getElementById('pd-iframe');
+  if (p.yt_id) {
+    videoSection.style.display = '';
+    iframe.src = `https://www.youtube.com/embed/${p.yt_id}?autoplay=0&rel=0`;
+  } else {
+    videoSection.style.display = 'none';
+    iframe.src = '';
+  }
+
+  // Related products (same category, excluding self)
+  const related = RSA_PRODUCTS.filter(x => x.category === p.category && x.id !== p.id).slice(0, 4);
+  const relGrid = document.getElementById('related-grid');
+  relGrid.innerHTML = '';
+  related.forEach(r => relGrid.appendChild(createCard(r, true)));
+
+  showPage('product');
+}
+
+// ──────────────────────────────────────────────
+// YOUTUBE STATS (FROM STATIC JSON)
+// ──────────────────────────────────────────────
+async function fetchYouTubeStats() {
+  try {
+    // We now simply read the stats.json file generated hourly by GitHub Actions
+    const res = await fetch('stats.json?t=' + Date.now());
+    if (!res.ok) return;
+    const allStats = await res.json();
+    applyStats(allStats);
+  } catch (e) { 
+    console.warn('Failed to load stats.json:', e); 
+  }
+}
+
+function applyStats(statsMap) {
+  RSA_PRODUCTS.forEach(p => {
+    if (p.yt_id && statsMap[p.yt_id]) {
+      p.views = statsMap[p.yt_id].views;
+      p.likes = statsMap[p.yt_id].likes;
+
+      // Live-update any visible stat elements on the grid
+      const el = document.getElementById(`yt-stats-${p.id}`);
+      if (el) {
+        const v = formatNumber(p.views);
+        const l = formatNumber(p.likes);
+        if (v || l) {
+          el.innerHTML = `${v ? `▶ ${v}` : ''}${v && l ? ' &nbsp;·&nbsp; ' : ''}${l ? `♥ ${l}` : ''}`;
+          el.classList.add('visible');
+        }
+      }
+    }
+  });
+}
+
+// ──────────────────────────────────────────────
+// INIT
+// ──────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+  const btn = document.getElementById('theme-toggle');
+  if (btn) btn.textContent = currentTheme === 'light' ? '☾' : '☀';
+  renderGrid('product-grid', 'all');
+  fetchYouTubeStats();
+});
+
+// ──────────────────────────────────────────────
+// THEME TOGGLE
+// ──────────────────────────────────────────────
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('rsa_theme', newTheme);
+  
+  const btn = document.getElementById('theme-toggle');
+  if(btn) {
+    btn.textContent = newTheme === 'light' ? '☾' : '☀';
+  }
+}
+
+// Load saved theme
+const savedTheme = localStorage.getItem('rsa_theme');
+if (savedTheme === 'dark') {
+  document.documentElement.setAttribute('data-theme', 'dark');
+}
+
+
+
+

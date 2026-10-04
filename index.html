@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="description" content="Rashid Sketch Art – Original 1-of-1 Arabic calligraphy paintings. Every piece is unique. Buy directly via WhatsApp.">
+<title>Rashid Sketch Art – Original Arabic Calligraphy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ======= HEADER ======= -->
+<header id="header">
+  <div class="header-inner">
+    <a href="#" class="logo" onclick="showPage('home')">
+      <span class="logo-icon">✦</span>
+      <span>Rashid Sketch Art</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#" onclick="showPage('home')" id="nav-home" class="nav-link active">Home</a>
+      <a href="#" onclick="filterCategory('Masterpieces')" id="nav-master" class="nav-link">Masterpieces</a>
+      <a href="#" onclick="filterCategory('Most Liked')" id="nav-liked" class="nav-link">Most Liked</a>
+      <a href="#" onclick="filterCategory('Rising')" id="nav-rising" class="nav-link">Rising</a>
+      <a href="#" onclick="showPage('about')" id="nav-about" class="nav-link">About</a>
+    </nav>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode" onclick="toggleTheme()">☾</button>
+  </div>
+</header>
+
+<!-- ======= HOME PAGE ======= -->
+<div id="page-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="hero-sub">Original · One of One · Arabic Calligraphy</p>
+      <h1 class="hero-title">Art That Speaks<br>Without Words</h1>
+      <p class="hero-desc">Each painting exists exactly once.<br>Crafted by hand. Yours forever.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="document.getElementById('collection').scrollIntoView({behavior:'smooth'})">
+          View Collection
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLLECTION FILTERS -->
+  <section id="collection" class="collection-section">
+    <div class="section-header">
+      <h2 class="section-title">The Collection</h2>
+      <p class="section-sub">Every original painting by Rashid Sketch Art</p>
+    </div>
+    <div class="filter-tabs">
+      <button class="filter-tab active" id="tab-all" onclick="filterHome('all')">All</button>
+      <button class="filter-tab" id="tab-masterpieces" onclick="filterHome('Masterpieces')">Masterpieces</button>
+      <button class="filter-tab" id="tab-liked" onclick="filterHome('Most Liked')">Most Liked</button>
+      <button class="filter-tab" id="tab-rising" onclick="filterHome('Rising')">Rising</button>
+    </div>
+    <div class="product-grid" id="product-grid"></div>
+  </section>
+
+</div>
+
+<!-- ======= PRODUCT DETAIL PAGE ======= -->
+<div id="page-product" style="display:none;">
+  <div class="product-detail">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <div class="pd-layout">
+      <div class="pd-image-wrap">
+        <img id="pd-img" src="" alt="" class="pd-img">
+        <span id="pd-cat-badge" class="pd-badge"></span>
+      </div>
+      <div class="pd-info">
+        <p id="pd-cat-label" class="pd-cat-label"></p>
+        <h1 id="pd-title" class="pd-title"></h1>
+        <div id="pd-stats" class="pd-stats" style="display:none;">
+          <span id="pd-views" class="stat-pill views-pill">▶ —</span>
+          <span id="pd-likes" class="stat-pill likes-pill">♥ —</span>
+        </div>
+        <div class="pd-price-row">
+          <span class="pd-price-label">Price</span>
+          <span id="pd-price" class="pd-price"></span>
+        </div>
+        <p class="pd-one-of-one">✦ One of One · Only this original exists</p>
+        <a id="pd-wa-btn" href="#" target="_blank" class="btn-whatsapp">
+          BUY
+        </a>
+        <div id="pd-video-section" class="pd-video-section" style="display:none;">
+          <p class="pd-video-label">Watch This Being Created</p>
+          <div class="pd-video-wrap">
+            <iframe id="pd-iframe" src="" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Products -->
+    <div class="related-section">
+      <h3 class="related-title">More from the Collection</h3>
+      <div class="product-grid related-grid" id="related-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======= ABOUT PAGE ======= -->
+<div id="page-about" style="display:none;">
+  <div class="about-page">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <div class="about-layout">
+      <div class="about-img-wrap">
+        <img src="images/artist.png" alt="Rashid – Arabic Calligraphy Artist" class="about-img">
+      </div>
+      <div class="about-text">
+        <p class="about-eyebrow">The Artist</p>
+        <h1 class="about-title">Rashid</h1>
+        <p class="about-bio">Rashid is an Arabic calligraphy artist with over <strong>1 million YouTube subscribers</strong>. Each painting is created live on camera, blending traditional Islamic art with bold modern aesthetics.</p>
+        <p class="about-bio">Every piece in this collection is a <strong>one-of-one original</strong> — once it is sold, it is gone forever. No prints. No copies. Just the original.</p>
+        <div class="about-socials">
+          <a href="#" target="_blank" class="btn-social">Instagram</a>
+          <a href="#" target="_blank" class="btn-social">YouTube</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======= FOOTER ======= -->
+<footer class="footer">
+  <div class="footer-inner">
+    <p class="footer-brand">✦ Rashid Sketch Art</p>
+    <p class="footer-copy">Every painting is an original — one of one.</p>
+    <div class="footer-socials">
+      <a href="#" target="_blank" class="footer-link">Instagram</a>
+      <span class="footer-sep">·</span>
+      <a href="#" target="_blank" class="footer-link">YouTube</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ======= SCRIPTS ======= -->
+<script src="products.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -119,22 +119,43 @@ header, .hero, .card-body, .pd-info, .about-page, .about-stats {
   padding: 0 16px;
 }
 
-.nav-container {
-  border-top: 1px solid var(--border);
-  background: var(--bg2);
-}
-
-.nav-links {
+.header-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
-  overflow-x: auto;
-  -ms-overflow-style: none; scrollbar-width: none;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 8px 16px;
+  gap: 12px;
 }
-.nav-links::-webkit-scrollbar { display: none; }
+.menu-btn {
+  background: none; border: none; color: var(--fg); cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 4px; border-radius: 4px;
+}
+.menu-btn:hover { color: var(--gold); }
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  background: var(--bg2);
+  padding: 16px;
+  gap: 12px;
+  border-top: 1px solid var(--border);
+}
+.mobile-menu.open {
+  display: flex;
+}
+.mobile-link {
+  width: 100%;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .desktop-nav { display: none; }
+}
+@media (min-width: 901px) {
+  .menu-btn { display: none; }
+  .mobile-menu { display: none !important; }
+}
 .nav-link {
   font-family: 'Cinzel', serif;
   font-size: 0.7rem;

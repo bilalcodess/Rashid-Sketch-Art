@@ -217,3 +217,6 @@ if (savedTheme === 'dark') {
 
 
 
+
+function toggleMenu() { document.getElementById('mobile-menu').classList.toggle('open'); }
+function closeMenu() { document.getElementById('mobile-menu').classList.remove('open'); }

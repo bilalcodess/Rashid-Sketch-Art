@@ -18,16 +18,29 @@
       <span class="logo-icon">✦</span>
       <span>Rashid Sketch Art</span>
     </a>
-    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode" onclick="toggleTheme()">☾</button>
-  </div>
-  <div class="nav-container">
-    <nav class="nav-links">
-      <a href="#" onclick="showPage('home')" id="nav-home" class="nav-link active">Home</a>
-      <a href="#" onclick="filterCategory('Masterpieces')" id="nav-master" class="nav-link">Masterpieces</a>
-      <a href="#" onclick="filterCategory('Most Liked')" id="nav-liked" class="nav-link">Most Liked</a>
-      <a href="#" onclick="filterCategory('Rising')" id="nav-rising" class="nav-link">Rising</a>
-      <a href="#" onclick="showPage('about')" id="nav-about" class="nav-link">About</a>
+    
+    <nav class="desktop-nav">
+      <a href="#" onclick="filterCategory('all'); closeMenu();" id="nav-home" class="nav-link active">Home</a>
+      <a href="#" onclick="filterCategory('Masterpieces'); closeMenu();" id="nav-master" class="nav-link">Masterpieces</a>
+      <a href="#" onclick="filterCategory('Most Liked'); closeMenu();" id="nav-liked" class="nav-link">Most Liked</a>
+      <a href="#" onclick="filterCategory('Rising'); closeMenu();" id="nav-rising" class="nav-link">Rising</a>
+      <a href="#" onclick="showPage('about'); closeMenu();" id="nav-about" class="nav-link">About</a>
     </nav>
+
+    <div class="header-actions">
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode" onclick="toggleTheme()">☾</button>
+      <button id="menu-btn" class="menu-btn" onclick="toggleMenu()" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line></svg>
+      </button>
+    </div>
+  </div>
+  
+  <div id="mobile-menu" class="mobile-menu">
+    <a href="#" onclick="filterCategory('all'); closeMenu();" class="nav-link mobile-link active">Home</a>
+    <a href="#" onclick="filterCategory('Masterpieces'); closeMenu();" class="nav-link mobile-link">Masterpieces</a>
+    <a href="#" onclick="filterCategory('Most Liked'); closeMenu();" class="nav-link mobile-link">Most Liked</a>
+    <a href="#" onclick="filterCategory('Rising'); closeMenu();" class="nav-link mobile-link">Rising</a>
+    <a href="#" onclick="showPage('about'); closeMenu();" class="nav-link mobile-link">About</a>
   </div>
 </header>
 

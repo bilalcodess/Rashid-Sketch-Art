@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    RSA STORE – APPLICATION LOGIC
    ============================================================ */
 
@@ -28,11 +28,36 @@ let currentFilter = 'all';
 
 function filterHome(cat) {
   currentFilter = cat;
+  
+  const hero = document.getElementById('hero-section');
+  if (hero) {
+    if (cat === 'all') hero.style.display = 'flex';
+    else hero.style.display = 'none';
+  }
+
   // Update tab buttons
   document.querySelectorAll('.nav-link').forEach(t => t.classList.remove('active'));
   const tabMap = { all: 'nav-home', Masterpieces: 'nav-master', 'Most Liked': 'nav-liked', Rising: 'nav-rising' };
   if (tabMap[cat]) document.getElementById(tabMap[cat]).classList.add('active');
+  
+  // Highlight mobile links as well
+  const mobileMap = { all: 'nav-home-m', Masterpieces: 'nav-master-m', 'Most Liked': 'nav-liked-m', Rising: 'nav-rising-m' };
+  // (We don't strictly need IDs for mobile since querySelectorAll covers them if they share class, but we just want to ensure we find all active ones. Since they don't have IDs on mobile, we can just select by text or index. Actually, querySelectorAll covers all '.nav-link' including mobile ones, so we just need to add active to the mobile ones too. We can do that by finding all matching links.)
+  
+  // A better way to highlight ALL matching nav links (desktop + mobile)
+  document.querySelectorAll('.nav-link').forEach(t => {
+    t.classList.remove('active');
+    // If it's a category link and its onclick contains the category, mark it active
+    if (t.getAttribute('onclick') && t.getAttribute('onclick').includes(`'${cat}'`)) {
+      t.classList.add('active');
+    }
+  });
+
   renderGrid('product-grid', cat);
+  
+  if (cat !== 'all') {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }
 
 function filterCategory(cat) {

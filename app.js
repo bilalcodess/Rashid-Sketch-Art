@@ -247,4 +247,3 @@ if (savedTheme === 'dark') {
 function toggleMenu() { document.getElementById('mobile-menu').classList.toggle('open'); }
 function closeMenu() { document.getElementById('mobile-menu').classList.remove('open'); }
 
-window.addEventListener('scroll', () => { const menu = document.getElementById('mobile-menu'); if (menu && menu.classList.contains('open')) { menu.classList.remove('open'); } }, { passive: true });

@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    RSA STORE â€“ APPLICATION LOGIC
    ============================================================ */
 
@@ -81,7 +81,7 @@ function formatNumber(n) {
 
 function buildWaLink(product) {
   const txt = encodeURIComponent(
-    `Hi! I want to buy this painting: "${product.title}" priced at â‚¹${product.price.toLocaleString('en-IN')}. Can you confirm availability?`
+    `Hi! I want to buy this painting: "${product.title}" priced at ₹${product.price.toLocaleString('en-IN')}. Can you confirm availability?`
   );
   return `https://wa.me/${RSA_CONFIG.whatsapp}?text=${txt}`;
 }
@@ -93,7 +93,7 @@ function createCard(p, small = false) {
 
   const statsHtml = hasStats
     ? `<div class="card-yt-stats visible">
-        ${views ? `â–¶ ${views}` : ''}${views && likes ? ' &nbsp;Â·&nbsp; ' : ''}${likes ? `â™¥ ${likes}` : ''}
+        ${views ? `▶ ${views}` : ''}${views && likes ? ' &nbsp;·&nbsp; ' : ''}${likes ? `♥ ${likes}` : ''}
        </div>`
     : `<div class="card-yt-stats" id="yt-stats-${p.id}"></div>`;
 
@@ -198,7 +198,7 @@ function applyStats(statsMap) {
         const v = formatNumber(p.views);
         const l = formatNumber(p.likes);
         if (v || l) {
-          el.innerHTML = `${v ? `â–¶ ${v}` : ''}${v && l ? ' &nbsp;Â·&nbsp; ' : ''}${l ? `â™¥ ${l}` : ''}`;
+          el.innerHTML = `${v ? `▶ ${v}` : ''}${v && l ? ' &nbsp;·&nbsp; ' : ''}${l ? `♥ ${l}` : ''}`;
           el.classList.add('visible');
         }
       }
@@ -212,7 +212,7 @@ function applyStats(statsMap) {
 document.addEventListener('DOMContentLoaded', () => {
   const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
   const btn = document.getElementById('theme-toggle');
-  if (btn) btn.textContent = currentTheme === 'light' ? 'â˜¾' : 'â˜€';
+  if (btn) btn.textContent = currentTheme === 'light' ? '☾' : '☀';
   renderGrid('product-grid', 'all');
   fetchYouTubeStats();
 });
@@ -228,7 +228,7 @@ function toggleTheme() {
   
   const btn = document.getElementById('theme-toggle');
   if(btn) {
-    btn.textContent = newTheme === 'light' ? 'â˜¾' : 'â˜€';
+    btn.textContent = newTheme === 'light' ? '☾' : '☀';
   }
 }
 

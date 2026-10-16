@@ -1,13 +1,13 @@
 /* ============================================================
-   RSA STORE â€“ APPLICATION LOGIC
+   RSA STORE — APPLICATION LOGIC
    ============================================================ */
 
 const YT_CACHE_KEY = 'rsa_yt_cache';
 const YT_CACHE_TTL = 30 * 60 * 1000; // 30 minutes
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ──────────────────────────────────────────────────
 // ROUTING
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ──────────────────────────────────────────────────
 function showPage(name) {
   document.getElementById('page-home').style.display    = name === 'home'    ? '' : 'none';
   document.getElementById('page-product').style.display = name === 'product' ? '' : 'none';
@@ -21,9 +21,9 @@ function showPage(name) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ──────────────────────────────────────────────────
 // PRODUCT GRID RENDERING
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ──────────────────────────────────────────────────
 let currentFilter = 'all';
 
 function filterHome(cat) {
@@ -35,40 +35,42 @@ function filterHome(cat) {
     else hero.style.display = 'none';
   }
 
-  // Update tab buttons
-  document.querySelectorAll('.nav-link').forEach(t => t.classList.remove('active'));
-  const tabMap = { all: 'nav-home', Masterpieces: 'nav-master', 'Most Liked': 'nav-liked', Rising: 'nav-rising' };
-  if (tabMap[cat]) document.getElementById(tabMap[cat]).classList.add('active');
-  
-  // Highlight mobile links as well
-  const mobileMap = { all: 'nav-home-m', Masterpieces: 'nav-master-m', 'Most Liked': 'nav-liked-m', Rising: 'nav-rising-m' };
-  // (We don't strictly need IDs for mobile since querySelectorAll covers them if they share class, but we just want to ensure we find all active ones. Since they don't have IDs on mobile, we can just select by text or index. Actually, querySelectorAll covers all '.nav-link' including mobile ones, so we just need to add active to the mobile ones too. We can do that by finding all matching links.)
-  
-  // A better way to highlight ALL matching nav links (desktop + mobile)
+  // Update ALL matching nav links (desktop + mobile)
   document.querySelectorAll('.nav-link').forEach(t => {
     t.classList.remove('active');
-    // If it's a category link and its onclick contains the category, mark it active
     if (t.getAttribute('onclick') && t.getAttribute('onclick').includes(`'${cat}'`)) {
       t.classList.add('active');
+    }
+  });
+
+  // Update filter tabs
+  document.querySelectorAll('.filter-tab').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(`'${cat}'`)) {
+      btn.classList.add('active');
     }
   });
 
   renderGrid('product-grid', cat);
   
   if (cat !== 'all') {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const col = document.getElementById('collection');
+    if (col) col.scrollIntoView({ behavior: 'smooth' });
+    else window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }
 
-function filterCategory(cat) {
+function filterCategory(cat, tabEl) {
   showPage('home');
-  // Wait for home page to show, then filter
   setTimeout(() => filterHome(cat), 50);
 }
 
 function getCatBadgeClass(cat) {
-  if (cat === 'Rising')     return 'rising';
-  if (cat === 'Most Liked') return 'liked';
+  if (cat === 'Canvas')      return 'canvas';
+  if (cat === 'Neon Light')  return 'neon';
+  if (cat === 'Most Viewed') return 'viewed';
+  if (cat === 'Most Liked')  return 'liked';
+  if (cat === 'Rising')      return 'rising';
   return '';
 }
 
@@ -79,66 +81,198 @@ function formatNumber(n) {
   return n.toLocaleString('en-IN');
 }
 
-function buildWaLink(product) {
-  const txt = encodeURIComponent(
-    `Hi! I want to buy this painting: "${product.title}" priced at ₹${product.price.toLocaleString('en-IN')}. Can you confirm availability?`
-  );
-  const number = product.whatsapp || RSA_CONFIG.whatsapp;
-  return `https://wa.me/${number}?text=${txt}`;
+function buildWaLink(p) {
+  const phone = p.whatsapp || RSA_CONFIG.whatsapp;
+  const msg = encodeURIComponent(`Hi, I'm interested in "${p.title}" (₹${p.price.toLocaleString('en-IN')}). Is it still available?`);
+  return `https://wa.me/${phone}?text=${msg}`;
 }
 
-function createCard(p, small = false) {
-  const views  = formatNumber(p.views);
-  const likes  = formatNumber(p.likes);
-  const hasStats = views || likes;
-
-  const statsHtml = hasStats
-    ? `<div class="card-yt-stats visible">
-        ${views ? `▶ ${views}` : ''}${views && likes ? ' &nbsp;·&nbsp; ' : ''}${likes ? `♥ ${likes}` : ''}
-       </div>`
-    : `<div class="card-yt-stats" id="yt-stats-${p.id}"></div>`;
-
+// ──────────────────────────────────────────────────
+// CARD CREATION
+// ──────────────────────────────────────────────────
+function createCard(product, isRelated) {
   const card = document.createElement('div');
-  card.className = 'product-card';
+  card.className = 'product-card' + (isRelated ? ' related-card' : '');
+  card.onclick = () => openProduct(product.id);
+
+  const v = formatNumber(product.views);
+  const l = formatNumber(product.likes);
+  const statsHtml = (v || l)
+    ? `<p id="yt-stats-${product.id}" class="card-yt-stats visible">${v ? `\u25B6 ${v}` : ''}${v && l ? ' &nbsp;\u00B7&nbsp; ' : ''}${l ? `\u2665 ${l}` : ''}</p>`
+    : `<p id="yt-stats-${product.id}" class="card-yt-stats"></p>`;
+
+  let priceHtml = `\u20B9${product.price.toLocaleString('en-IN')}`;
+  if (product.original_price && product.original_price > product.price) {
+    const pct = Math.round(((product.original_price - product.price) / product.original_price) * 100);
+    priceHtml += ` <span class="card-mrp">\u20B9${product.original_price.toLocaleString('en-IN')}</span> <span class="card-discount">${pct}% OFF</span>`;
+  }
+
   card.innerHTML = `
     <div class="card-img-wrap">
-      <img src="${p.img}" alt="${p.title}" class="card-img" loading="lazy">
-      <span class="card-badge ${getCatBadgeClass(p.category)}">${p.category}</span>
+      <img src="${product.img}" alt="${product.title}" class="card-img" loading="lazy">
+      <span class="card-badge ${getCatBadgeClass(product.category)}">${product.category}</span>
     </div>
     <div class="card-body">
-      <div class="card-title">${p.title}</div>
+      <h3 class="card-title">${product.title}</h3>
       ${statsHtml}
-      <div class="card-price">₹${p.price.toLocaleString('en-IN')}</div>
-      <a class="card-buy-btn" href="${buildWaLink(p)}" target="_blank" onclick="event.stopPropagation()">BUY</a>
+      <p class="card-price">${priceHtml}</p>
+      <a href="${buildWaLink(product)}" target="_blank" class="card-buy-btn" onclick="event.stopPropagation();">Buy on WhatsApp</a>
     </div>
   `;
-  card.addEventListener('click', () => openProduct(p.id));
   return card;
 }
 
-function renderGrid(containerId, filter = 'all') {
-  const container = document.getElementById(containerId);
-  if (!container) return;
-  container.innerHTML = '';
-  const list = filter === 'all' ? RSA_PRODUCTS : RSA_PRODUCTS.filter(p => p.category === filter);
-  list.forEach(p => container.appendChild(createCard(p)));
+function renderGrid(gridId, category) {
+  const grid = document.getElementById(gridId);
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  let items = RSA_PRODUCTS;
+  if (category === 'Canvas') {
+    items = RSA_PRODUCTS.filter(p => p.category === 'Canvas' || p.type === 'canvas');
+  } else if (category === 'Neon Light') {
+    items = RSA_PRODUCTS.filter(p => p.category === 'Neon Light' || p.type === 'neon');
+  } else if (category === 'Most Viewed') {
+    const explicitlyTagged = RSA_PRODUCTS.filter(p => p.category === 'Most Viewed');
+    if (explicitlyTagged.length > 0) {
+      items = explicitlyTagged;
+    } else {
+      const withViews = RSA_PRODUCTS.filter(p => p.views && p.views > 0);
+      if (withViews.length > 0) {
+        items = [...withViews].sort((a, b) => (b.views || 0) - (a.views || 0));
+      } else {
+        items = RSA_PRODUCTS.slice(0, 12);
+      }
+    }
+  } else if (category !== 'all') {
+    items = RSA_PRODUCTS.filter(p => p.category === category);
+  }
+
+  if (items.length === 0) {
+    grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--fg3); padding: 50px 20px; font-family: \'Inter\', sans-serif;">No paintings found in this category.</p>';
+    return;
+  }
+
+  items.forEach(p => grid.appendChild(createCard(p, false)));
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ──────────────────────────────────────────────────
+// IMAGE SLIDER (for canvas paintings with 2 images)
+// ──────────────────────────────────────────────────
+let currentSlide = 0;
+
+function slideImage(dir) {
+  const slides = document.querySelectorAll('.pd-slide');
+  const dots = document.querySelectorAll('.pd-dot');
+  if (slides.length === 0) return;
+  slides[currentSlide].classList.remove('active');
+  slides[currentSlide].style.display = 'none';
+  dots[currentSlide]?.classList.remove('active');
+  
+  currentSlide = (currentSlide + dir + slides.length) % slides.length;
+  
+  slides[currentSlide].classList.add('active');
+  slides[currentSlide].style.display = 'block';
+  dots[currentSlide]?.classList.add('active');
+}
+
+function goToSlide(idx) {
+  const slides = document.querySelectorAll('.pd-slide');
+  const dots = document.querySelectorAll('.pd-dot');
+  if (slides.length === 0) return;
+  slides[currentSlide].classList.remove('active');
+  slides[currentSlide].style.display = 'none';
+  dots[currentSlide]?.classList.remove('active');
+  
+  currentSlide = idx;
+  
+  slides[currentSlide].classList.add('active');
+  slides[currentSlide].style.display = 'block';
+  dots[currentSlide]?.classList.add('active');
+}
+
+// ──────────────────────────────────────────────────
 // PRODUCT DETAIL
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ──────────────────────────────────────────────────
 function openProduct(id) {
   const p = RSA_PRODUCTS.find(x => x.id === id);
   if (!p) return;
 
-  document.getElementById('pd-img').src         = p.img;
-  document.getElementById('pd-img').alt         = p.title;
+  // Reset slider
+  currentSlide = 0;
+  
+  // Primary image
+  const img1 = document.getElementById('pd-img');
+  const img2 = document.getElementById('pd-img2');
+  const prevBtn = document.getElementById('pd-prev');
+  const nextBtn = document.getElementById('pd-next');
+  const dots = document.getElementById('pd-dots');
+  
+  img1.src = p.img;
+  img1.alt = p.title;
+  img1.style.display = 'block';
+  img1.classList.add('active');
+  
+  // Second image (for canvas paintings)
+  if (p.img2) {
+    img2.src = p.img2;
+    img2.alt = p.title + ' (alternate view)';
+    img2.style.display = 'none';
+    img2.classList.remove('active');
+    prevBtn.style.display = '';
+    nextBtn.style.display = '';
+    dots.style.display = '';
+    document.querySelectorAll('.pd-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === 0);
+    });
+  } else {
+    img2.src = '';
+    img2.style.display = 'none';
+    img2.classList.remove('active');
+    prevBtn.style.display = 'none';
+    nextBtn.style.display = 'none';
+    dots.style.display = 'none';
+  }
+
   document.getElementById('pd-title').textContent = p.title;
   document.getElementById('pd-cat-label').textContent = p.category;
   document.getElementById('pd-cat-badge').textContent = p.category;
-  document.getElementById('pd-cat-badge').className = `pd-badge ${getCatBadgeClass(p.category)}`;
-  document.getElementById('pd-price').textContent = `₹${p.price.toLocaleString('en-IN')}`;
+  let pdPriceHtml = `\u20B9${p.price.toLocaleString('en-IN')}`;
+  if (p.original_price && p.original_price > p.price) {
+    const pct = Math.round(((p.original_price - p.price) / p.original_price) * 100);
+    pdPriceHtml += ` <span class="pd-mrp">\u20B9${p.original_price.toLocaleString('en-IN')}</span> <span class="pd-discount">${pct}% OFF</span>`;
+  }
+  document.getElementById('pd-price').innerHTML = pdPriceHtml;
   document.getElementById('pd-wa-btn').href = buildWaLink(p);
+
+  // Description
+  const descEl = document.getElementById('pd-description');
+  if (p.description) {
+    descEl.textContent = p.description;
+    descEl.style.display = '';
+  } else {
+    descEl.style.display = 'none';
+  }
+
+  // Size info
+  const sizeInfo = document.getElementById('pd-size-info');
+  if (p.size) {
+    document.getElementById('pd-size').textContent = p.size;
+    sizeInfo.style.display = '';
+  } else {
+    sizeInfo.style.display = 'none';
+  }
+
+  // Type badge
+  const typeInfo = document.getElementById('pd-type-info');
+  const typeBadge = document.getElementById('pd-type-badge');
+  if (p.type) {
+    typeBadge.textContent = p.type === 'canvas' ? 'Canvas · Gold Leaf Painting' : 'Neon Light Calligraphy';
+    typeBadge.className = `pd-type-badge pd-type-${p.type}`;
+    typeInfo.style.display = '';
+  } else {
+    typeInfo.style.display = 'none';
+  }
 
   // Stats
   const statsEl = document.getElementById('pd-stats');
@@ -146,18 +280,31 @@ function openProduct(id) {
   const likes = formatNumber(p.likes);
   if (views || likes) {
     statsEl.style.display = 'flex';
-    document.getElementById('pd-views').textContent = views ? `â–¶ ${views} views` : '';
-    document.getElementById('pd-likes').textContent = likes ? `â™¥ ${likes} likes` : '';
+    document.getElementById('pd-views').textContent = views ? `\u25B6 ${views} views` : '';
+    document.getElementById('pd-likes').textContent = likes ? `\u2665 ${likes} likes` : '';
   } else {
     statsEl.style.display = 'none';
   }
 
-  // YouTube video
+  // YouTube video & stats under video
   const videoSection = document.getElementById('pd-video-section');
   const iframe = document.getElementById('pd-iframe');
-  if (p.yt_id) {
-    videoSection.style.display = '';
+  const ytLink = document.getElementById('pd-yt-link');
+  const vViews = document.getElementById('pd-video-views');
+  const vLikes = document.getElementById('pd-video-likes');
+  
+  if (p.yt_id && p.yt_id.trim() !== '') {
+    videoSection.style.display = 'flex';
     iframe.src = `https://www.youtube.com/embed/${p.yt_id}?autoplay=0&rel=0`;
+    if (ytLink) ytLink.href = `https://www.youtube.com/watch?v=${p.yt_id}`;
+    if (vViews) {
+      vViews.textContent = views ? `\u25B6 ${views} views` : '\u25B6 YouTube Short';
+      vViews.style.display = '';
+    }
+    if (vLikes) {
+      vLikes.textContent = likes ? `\u2665 ${likes} likes` : '';
+      vLikes.style.display = likes ? '' : 'none';
+    }
   } else {
     videoSection.style.display = 'none';
     iframe.src = '';
@@ -172,12 +319,11 @@ function openProduct(id) {
   showPage('product');
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ──────────────────────────────────────────────────
 // YOUTUBE STATS (FROM STATIC JSON)
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ──────────────────────────────────────────────────
 async function fetchYouTubeStats() {
   try {
-    // We now simply read the stats.json file generated hourly by GitHub Actions
     const res = await fetch('stats.json?t=' + Date.now());
     if (!res.ok) return;
     const allStats = await res.json();
@@ -193,13 +339,12 @@ function applyStats(statsMap) {
       p.views = statsMap[p.yt_id].views;
       p.likes = statsMap[p.yt_id].likes;
 
-      // Live-update any visible stat elements on the grid
       const el = document.getElementById(`yt-stats-${p.id}`);
       if (el) {
         const v = formatNumber(p.views);
         const l = formatNumber(p.likes);
         if (v || l) {
-          el.innerHTML = `${v ? `▶ ${v}` : ''}${v && l ? ' &nbsp;·&nbsp; ' : ''}${l ? `♥ ${l}` : ''}`;
+          el.innerHTML = `${v ? `\u25B6 ${v}` : ''}${v && l ? ' &nbsp;\u00B7&nbsp; ' : ''}${l ? `\u2665 ${l}` : ''}`;
           el.classList.add('visible');
         }
       }
@@ -207,20 +352,20 @@ function applyStats(statsMap) {
   });
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ──────────────────────────────────────────────────
 // INIT
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ──────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
   const btn = document.getElementById('theme-toggle');
-  if (btn) btn.textContent = currentTheme === 'light' ? '☾' : '☀';
+  if (btn) btn.textContent = currentTheme === 'light' ? '\u263E' : '\u2600';
   renderGrid('product-grid', 'all');
   fetchYouTubeStats();
 });
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ──────────────────────────────────────────────────
 // THEME TOGGLE
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ──────────────────────────────────────────────────
 function toggleTheme() {
   const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
   const newTheme = currentTheme === 'light' ? 'dark' : 'light';
@@ -229,7 +374,7 @@ function toggleTheme() {
   
   const btn = document.getElementById('theme-toggle');
   if(btn) {
-    btn.textContent = newTheme === 'light' ? '☾' : '☀';
+    btn.textContent = newTheme === 'light' ? '\u263E' : '\u2600';
   }
 }
 
@@ -239,11 +384,9 @@ if (savedTheme === 'dark') {
   document.documentElement.setAttribute('data-theme', 'dark');
 }
 
-
-
-
-
-
+// ──────────────────────────────────────────────────
+// MOBILE MENU
+// ──────────────────────────────────────────────────
 let menuOpenTime = 0;
 function toggleMenu() { 
   const menu = document.getElementById('mobile-menu');
@@ -274,4 +417,3 @@ document.addEventListener('click', (e) => {
     }
   }
 });
-

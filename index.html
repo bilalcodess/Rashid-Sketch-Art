@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<meta name="description" content="Rashid Sketch Art – Original 1-of-1 Arabic calligraphy paintings. Every piece is unique. Buy directly via WhatsApp.">
+<meta name="description" content="Rashid Sketch Art – Original 1-of-1 Arabic calligraphy paintings. Neon light calligraphy & gold leaf canvas art. Buy directly via WhatsApp.">
 <title>Rashid Sketch Art – Original Arabic Calligraphy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500&display=swap">
@@ -15,20 +15,20 @@
 <header id="header">
   <div class="header-inner">
     <a href="#" class="logo" onclick="showPage('home')">
-      <span class="logo-icon">✦</span>
+      <span class="logo-icon">&#10022;</span>
       <span>Rashid Sketch Art</span>
     </a>
     
     <nav class="desktop-nav">
       <a href="#" onclick="filterCategory('all'); closeMenu();" id="nav-home" class="nav-link active">Home</a>
-      <a href="#" onclick="filterCategory('Masterpieces'); closeMenu();" id="nav-master" class="nav-link">Masterpieces</a>
-      <a href="#" onclick="filterCategory('Most Liked'); closeMenu();" id="nav-liked" class="nav-link">Most Liked</a>
-      <a href="#" onclick="filterCategory('Rising'); closeMenu();" id="nav-rising" class="nav-link">Rising</a>
+      <a href="#" onclick="filterCategory('Canvas'); closeMenu();" id="nav-canvas" class="nav-link">Canvas</a>
+      <a href="#" onclick="filterCategory('Neon Light'); closeMenu();" id="nav-neon" class="nav-link">Neon Light</a>
+      <a href="#" onclick="filterCategory('Most Viewed'); closeMenu();" id="nav-viewed" class="nav-link">Most Viewed</a>
       <a href="#" onclick="showPage('about'); closeMenu();" id="nav-about" class="nav-link">About</a>
     </nav>
 
     <div class="header-actions">
-      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode" onclick="toggleTheme()">☾</button>
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode" onclick="toggleTheme()">&#9790;</button>
       <button id="menu-btn" class="menu-btn" onclick="toggleMenu()" aria-label="Menu">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line></svg>
       </button>
@@ -37,9 +37,9 @@
   
   <div id="mobile-menu" class="mobile-menu">
     <a href="#" onclick="filterCategory('all'); closeMenu();" class="nav-link mobile-link active">Home</a>
-    <a href="#" onclick="filterCategory('Masterpieces'); closeMenu();" class="nav-link mobile-link">Masterpieces</a>
-    <a href="#" onclick="filterCategory('Most Liked'); closeMenu();" class="nav-link mobile-link">Most Liked</a>
-    <a href="#" onclick="filterCategory('Rising'); closeMenu();" class="nav-link mobile-link">Rising</a>
+    <a href="#" onclick="filterCategory('Canvas'); closeMenu();" class="nav-link mobile-link">Canvas</a>
+    <a href="#" onclick="filterCategory('Neon Light'); closeMenu();" class="nav-link mobile-link">Neon Light</a>
+    <a href="#" onclick="filterCategory('Most Viewed'); closeMenu();" class="nav-link mobile-link">Most Viewed</a>
     <a href="#" onclick="showPage('about'); closeMenu();" class="nav-link mobile-link">About</a>
   </div>
 </header>
@@ -51,7 +51,7 @@
   <section class="hero" id="hero-section">
     <div class="hero-bg"></div>
     <div class="hero-content">
-      <p class="hero-sub">Original · One of One · Arabic Calligraphy</p>
+      <p class="hero-sub">Original &#183; One of One &#183; Arabic Calligraphy</p>
       <h1 class="hero-title">Art That Speaks<br>Without Words</h1>
       <p class="hero-desc">Each painting exists exactly once.<br>Crafted by hand. Yours forever.</p>
       <div class="hero-actions">
@@ -62,13 +62,49 @@
     </div>
   </section>
 
-  <!-- COLLECTION FILTERS -->
+  <!-- COLLECTION -->
   <section id="collection" class="collection-section">
     <div class="section-header">
       <h2 class="section-title">The Collection</h2>
       <p class="section-sub">Every original painting by Rashid Sketch Art</p>
+      <div class="filter-tabs">
+        <button class="filter-tab active" id="tab-all" onclick="filterCategory('all', this)">All</button>
+        <button class="filter-tab" id="tab-canvas" onclick="filterCategory('Canvas', this)">Canvas</button>
+        <button class="filter-tab" id="tab-neon" onclick="filterCategory('Neon Light', this)">Neon Light</button>
+        <button class="filter-tab" id="tab-viewed" onclick="filterCategory('Most Viewed', this)">Most Viewed</button>
+      </div>
     </div>
     <div class="product-grid" id="product-grid"></div>
+  </section>
+
+  <!-- ARTIST SPOTLIGHT (HOMEPAGE) -->
+  <section class="artist-section" id="artist-section">
+    <div class="artist-inner">
+      <div class="artist-card">
+        <div class="artist-img-col">
+          <img src="images/artist.png" alt="Rashid – Original Arabic Calligraphy Artist" class="artist-photo">
+        </div>
+        <div class="artist-info-col">
+          <p class="artist-kicker">The Artist &amp; Creator</p>
+          <h2 class="artist-name">Rashid</h2>
+          <p class="artist-lead">
+            With over <strong>1 Million+ YouTube subscribers</strong>, Rashid transforms sacred Arabic calligraphy into mesmerizing physical art on camera &mdash; blending centuries-old scripture with glowing neon pigments and real gold leaf.
+          </p>
+          <p class="artist-quote">
+            &ldquo;Every painting exists exactly once in the entire world. When you acquire a piece, it belongs to you and no one else forever.&rdquo;
+          </p>
+          <div class="artist-badges">
+            <span class="artist-badge">1M+ YouTube Community</span>
+            <span class="artist-badge">100% Hand-Painted</span>
+            <span class="artist-badge">One-of-One Physical Original</span>
+          </div>
+          <div class="artist-links">
+            <a href="https://www.youtube.com/@RashidsketchArt" target="_blank" class="btn-social btn-social-yt">&#9654; YouTube Channel</a>
+            <a href="https://www.instagram.com/rashidsketchart" target="_blank" class="btn-social btn-social-ig">&#9678; Instagram</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
 </div>
@@ -76,31 +112,54 @@
 <!-- ======= PRODUCT DETAIL PAGE ======= -->
 <div id="page-product" style="display:none;">
   <div class="product-detail">
-    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <button class="back-btn" onclick="showPage('home')">&#8592; Back</button>
     <div class="pd-layout">
       <div class="pd-image-wrap">
-        <img id="pd-img" src="" alt="" class="pd-img">
+        <!-- Image slider for canvas paintings with 2 images -->
+        <div class="pd-slider" id="pd-slider">
+          <img id="pd-img" src="" alt="" class="pd-img pd-slide active">
+          <img id="pd-img2" src="" alt="" class="pd-img pd-slide" style="display:none;">
+          <button id="pd-prev" class="pd-slider-btn pd-prev" onclick="slideImage(-1)" style="display:none;">&#8249;</button>
+          <button id="pd-next" class="pd-slider-btn pd-next" onclick="slideImage(1)" style="display:none;">&#8250;</button>
+          <div id="pd-dots" class="pd-dots" style="display:none;">
+            <span class="pd-dot active" onclick="goToSlide(0)"></span>
+            <span class="pd-dot" onclick="goToSlide(1)"></span>
+          </div>
+        </div>
         <span id="pd-cat-badge" class="pd-badge"></span>
       </div>
       <div class="pd-info">
         <p id="pd-cat-label" class="pd-cat-label"></p>
         <h1 id="pd-title" class="pd-title"></h1>
+        <p id="pd-description" class="pd-description"></p>
+        <div id="pd-size-info" class="pd-size-info" style="display:none;">
+          <span class="pd-size-label">Size</span>
+          <span id="pd-size" class="pd-size-value"></span>
+        </div>
+        <div id="pd-type-info" class="pd-type-badge-wrap" style="display:none;">
+          <span id="pd-type-badge" class="pd-type-badge"></span>
+        </div>
         <div id="pd-stats" class="pd-stats" style="display:none;">
-          <span id="pd-views" class="stat-pill views-pill">▶ —</span>
-          <span id="pd-likes" class="stat-pill likes-pill">♥ —</span>
+          <span id="pd-views" class="stat-pill views-pill">&#9654; &#8212;</span>
+          <span id="pd-likes" class="stat-pill likes-pill">&#9829; &#8212;</span>
         </div>
         <div class="pd-price-row">
           <span class="pd-price-label">Price</span>
           <span id="pd-price" class="pd-price"></span>
         </div>
-        <p class="pd-one-of-one">✦ One of One · Only this original exists</p>
+        <p class="pd-one-of-one">&#10022; One of One &#183; Only this original exists</p>
         <a id="pd-wa-btn" href="#" target="_blank" class="btn-whatsapp">
           BUY
         </a>
         <div id="pd-video-section" class="pd-video-section" style="display:none;">
-          <p class="pd-video-label">Watch This Being Created</p>
+          <p class="pd-video-label">Watch This Painting Being Created</p>
           <div class="pd-video-wrap">
             <iframe id="pd-iframe" src="" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+          </div>
+          <div class="pd-video-stats" id="pd-video-stats">
+            <span id="pd-video-views" class="stat-pill views-pill">&#9654; &#8212;</span>
+            <span id="pd-video-likes" class="stat-pill likes-pill">&#9829; &#8212;</span>
+            <a id="pd-yt-link" href="#" target="_blank" class="pd-yt-direct-btn">Watch on YouTube &#8599;</a>
           </div>
         </div>
       </div>
@@ -117,19 +176,33 @@
 <!-- ======= ABOUT PAGE ======= -->
 <div id="page-about" style="display:none;">
   <div class="about-page">
-    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <button class="back-btn" onclick="showPage('home')">&#8592; Back to Store</button>
     <div class="about-layout">
       <div class="about-img-wrap">
-        <img src="images/artist.png" alt="Rashid – Arabic Calligraphy Artist" class="about-img">
+        <img src="images/artist.png" alt="Rashid – Original Arabic Calligraphy Artist" class="about-img">
       </div>
       <div class="about-text">
-        <p class="about-eyebrow">The Artist</p>
+        <p class="about-eyebrow">The Artist &amp; Creator</p>
         <h1 class="about-title">Rashid</h1>
-        <p class="about-bio">Rashid is an Arabic calligraphy artist with over <strong>1 million YouTube subscribers</strong>. Each painting is created live on camera, blending traditional Islamic art with bold modern aesthetics.</p>
-        <p class="about-bio">Every piece in this collection is a <strong>one-of-one original</strong> — once it is sold, it is gone forever. No prints. No copies. Just the original.</p>
+        <p class="about-bio">Rashid is an internationally recognized Arabic calligraphy artist with over <strong>1 Million+ YouTube subscribers</strong>. Through his live creative sessions on camera, he blends timeless Islamic calligraphy with modern neon brilliance and luxurious gold leaf artistry.</p>
+        <p class="about-bio">Every artwork in this collection is a <strong>one-of-one original physical painting</strong> &mdash; once a piece is collected, it is gone forever. No prints. No duplicates. Only the singular original crafted by hand.</p>
+        <div class="about-stats-mini">
+          <div class="about-stat-item">
+            <span class="about-stat-val">1M+</span>
+            <span class="about-stat-sub">YouTube Community</span>
+          </div>
+          <div class="about-stat-item">
+            <span class="about-stat-val">100%</span>
+            <span class="about-stat-sub">Hand-Painted</span>
+          </div>
+          <div class="about-stat-item">
+            <span class="about-stat-val">1-of-1</span>
+            <span class="about-stat-sub">No Prints Ever</span>
+          </div>
+        </div>
         <div class="about-socials">
-          <a href="https://www.instagram.com/rashidsketchart?stkn=cWd6d3pzN2NkYXBs" target="_blank" class="btn-social">Instagram</a>
-          <a href="https://www.youtube.com/@RashidsketchArt" target="_blank" class="btn-social">YouTube</a>
+          <a href="https://www.youtube.com/@RashidsketchArt" target="_blank" class="btn-social btn-social-yt">&#9654; YouTube Channel</a>
+          <a href="https://www.instagram.com/rashidsketchart" target="_blank" class="btn-social btn-social-ig">&#9678; Instagram Profile</a>
         </div>
       </div>
     </div>
@@ -139,12 +212,14 @@
 <!-- ======= FOOTER ======= -->
 <footer class="footer">
   <div class="footer-inner">
-    <p class="footer-brand">✦ Rashid Sketch Art</p>
-    <p class="footer-copy">Every painting is an original — one of one.</p>
+    <p class="footer-brand">&#10022; Rashid Sketch Art</p>
+    <p class="footer-copy">Every painting is an original &mdash; one of one physical artwork.</p>
     <div class="footer-socials">
-      <a href="https://www.instagram.com/rashidsketchart?stkn=cWd6d3pzN2NkYXBs" target="_blank" class="footer-link">Instagram</a>
-      <span class="footer-sep">·</span>
+      <a href="https://www.instagram.com/rashidsketchart" target="_blank" class="footer-link">Instagram</a>
+      <span class="footer-sep">&middot;</span>
       <a href="https://www.youtube.com/@RashidsketchArt" target="_blank" class="footer-link">YouTube</a>
+      <span class="footer-sep">&middot;</span>
+      <a href="#" onclick="showPage('about'); return false;" class="footer-link">About The Artist</a>
     </div>
   </div>
 </footer>

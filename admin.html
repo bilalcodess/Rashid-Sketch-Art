@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>RSA Private Admin — Rashid Sketch Art</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --bg: #0d0f12;
+    --card-bg: #161920;
+    --border: #262b36;
+    --gold: #d4af37;
+    --gold-light: #f3e5ab;
+    --fg: #f0f3f6;
+    --fg-muted: #8b949e;
+    --success: #2ea043;
+    --danger: #da3633;
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    padding-bottom: 90px;
+  }
+
+  /* Header */
+  .admin-header {
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 12px 16px;
+  }
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 12px;
+  }
+  .brand-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+  .header-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: 0.2s;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .btn-primary { background: var(--gold); color: #000; font-weight: 600; }
+  .btn-primary:hover { background: var(--gold-light); }
+  .btn-secondary { background: #21262d; color: var(--fg); border-color: var(--border); }
+  .btn-secondary:hover { background: #30363d; }
+  .btn-success { background: var(--success); color: #fff; }
+  .btn-success:hover { background: #3fb950; }
+  .btn-view-store { background: transparent; color: var(--gold); border-color: var(--gold); }
+
+  /* Toolbar */
+  .toolbar {
+    max-width: 1200px;
+    margin: 14px auto 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .search-input {
+    flex: 1;
+    min-width: 220px;
+    background: #0d1117;
+    border: 1px solid var(--border);
+    color: var(--fg);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+  }
+  .filter-group {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+  .filter-btn {
+    background: #21262d;
+    border: 1px solid var(--border);
+    color: var(--fg-muted);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .filter-btn.active {
+    background: var(--gold);
+    color: #000;
+    border-color: var(--gold);
+    font-weight: 600;
+  }
+
+  /* Container */
+  .container {
+    max-width: 1200px;
+    margin: 16px auto;
+    padding: 0 16px;
+  }
+
+  /* Product Cards (Mobile-first, responsive grid) */
+  .product-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  @media (min-width: 768px) {
+    .product-list {
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    }
+  }
+
+  .item-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px;
+    display: flex;
+    gap: 14px;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+  .item-card.modified {
+    border-color: var(--gold);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.15);
+  }
+  .item-img-col {
+    flex: 0 0 85px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+  }
+  .item-thumb {
+    width: 85px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: #000;
+  }
+  .item-id-badge {
+    font-size: 0.65rem;
+    color: var(--fg-muted);
+    font-family: monospace;
+  }
+  .item-fields-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+  }
+  .field-row {
+    display: flex;
+    gap: 8px;
+  }
+  .field-row > * { flex: 1; }
+  .field-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    letter-spacing: 0.5px;
+    margin-bottom: 3px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .field-input, .field-select {
+    width: 100%;
+    background: #0d1117;
+    border: 1px solid var(--border);
+    color: var(--fg);
+    padding: 7px 9px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-family: inherit;
+    transition: border-color 0.15s;
+  }
+  .field-input:focus, .field-select:focus {
+    outline: none;
+    border-color: var(--gold);
+  }
+  .item-title-input {
+    font-weight: 500;
+    color: #fff;
+  }
+  .yt-field-wrap {
+    display: flex;
+    gap: 6px;
+  }
+  .yt-link-btn {
+    padding: 0 8px;
+    background: #21262d;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: #ff0000;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    font-size: 0.75rem;
+  }
+  .yt-stats-pill {
+    font-size: 0.68rem;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 2px;
+  }
+  .discount-pill {
+    font-size: 0.65rem;
+    color: #2ea043;
+    font-weight: 600;
+  }
+
+  /* Sticky Bottom Bar for Mobile Save */
+  .sticky-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(22, 25, 32, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid var(--border);
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+  }
+  .bar-info {
+    font-size: 0.8rem;
+    color: var(--fg-muted);
+  }
+  .bar-info strong {
+    color: var(--gold);
+  }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(6px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .modal-overlay.hidden { display: none; }
+  .modal-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    width: 100%;
+    max-width: 480px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 24px 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  }
+  .modal-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .modal-close {
+    background: none;
+    border: none;
+    color: var(--fg-muted);
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  .modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .upload-box {
+    border: 2px dashed var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    background: #0d1117;
+    transition: border-color 0.2s;
+  }
+  .upload-box:hover { border-color: var(--gold); }
+  .preview-img {
+    max-width: 120px;
+    max-height: 150px;
+    border-radius: 6px;
+    margin: 8px auto 0;
+    display: block;
+    object-fit: cover;
+  }
+
+  /* Toast Notification */
+  .toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--success);
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-weight: 500;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: 0.3s;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="admin-header">
+  <div class="header-top">
+    <div class="brand-title">
+      <span>&#10022;</span> RSA Store Manager
+    </div>
+    <div class="header-actions">
+      <a href="index.html" target="_blank" class="btn btn-view-store">&#8599; View Live Store</a>
+      <button class="btn btn-secondary" onclick="openNewModal()">&#43; Add Painting</button>
+      <button class="btn btn-primary" onclick="saveAll()">&#128190; Save Changes</button>
+    </div>
+  </div>
+  <div class="toolbar">
+    <input type="text" id="search-box" class="search-input" placeholder="Search painting by title..." oninput="filterItems()">
+    <div class="filter-group">
+      <button class="filter-btn active" onclick="setFilter('all', this)">All (<span id="count-all">0</span>)</button>
+      <button class="filter-btn" onclick="setFilter('Canvas', this)">Canvas (<span id="count-canvas">0</span>)</button>
+      <button class="filter-btn" onclick="setFilter('Neon Light', this)">Neon Light (<span id="count-neon">0</span>)</button>
+      <button class="filter-btn" onclick="setFilter('no-yt', this)">Needs YouTube Link</button>
+    </div>
+  </div>
+</header>
+
+<!-- Main Container -->
+<main class="container">
+  <div id="product-list" class="product-list"></div>
+</main>
+
+<!-- Sticky Save Bar (Convenient on Phone) -->
+<div class="sticky-bar">
+  <div class="bar-info">
+    <span id="unsaved-count">0</span> changes pending
+  </div>
+  <div style="display:flex; gap:8px;">
+    <button class="btn btn-secondary" onclick="openNewModal()">&#43; New</button>
+    <button class="btn btn-success" onclick="saveAll()">&#128190; Save All</button>
+  </div>
+</div>
+
+<!-- Modal: Add New Painting -->
+<div id="new-modal" class="modal-overlay hidden">
+  <div class="modal-box">
+    <div class="modal-title">
+      <span>Add New Painting</span>
+      <button class="modal-close" onclick="closeNewModal()">&times;</button>
+    </div>
+    <form class="modal-form" onsubmit="handleAddNew(event)">
+      <!-- Upload File -->
+      <div>
+        <label class="field-label">Painting Photo (From Phone / PC)</label>
+        <div class="upload-box" onclick="document.getElementById('new-file-input').click()">
+          <span id="upload-label">&#128247; Tap to select or snap photo</span>
+          <img id="new-img-preview" class="preview-img" style="display:none;">
+          <input type="file" id="new-file-input" accept="image/*" style="display:none;" onchange="previewUpload(this)">
+        </div>
+      </div>
+
+      <div>
+        <label class="field-label">Title</label>
+        <input type="text" id="new-title" class="field-input" placeholder="e.g. Surah Al-Fatiha Calligraphy" required>
+      </div>
+
+      <div class="field-row">
+        <div>
+          <label class="field-label">Category</label>
+          <select id="new-category" class="field-select">
+            <option value="Neon Light">Neon Light</option>
+            <option value="Canvas">Canvas</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label">Size</label>
+          <input type="text" id="new-size" class="field-input" placeholder="e.g. 26x35 cm or 50x56 cm">
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div>
+          <label class="field-label">Selling Price (₹)</label>
+          <input type="number" id="new-price" class="field-input" placeholder="7999" required>
+        </div>
+        <div>
+          <label class="field-label">M.R.P. / Crossed Price (₹)</label>
+          <input type="number" id="new-mrp" class="field-input" placeholder="13330">
+        </div>
+      </div>
+
+      <div>
+        <label class="field-label">YouTube Short Link or Video ID</label>
+        <input type="text" id="new-yt" class="field-input" placeholder="https://youtube.com/shorts/... or ID">
+      </div>
+
+      <div>
+        <label class="field-label">Short Description</label>
+        <textarea id="new-desc" class="field-input" rows="2" placeholder="Hand-painted physical calligraphy..."></textarea>
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:8px;">
+        <button type="button" class="btn btn-secondary" onclick="closeNewModal()">Cancel</button>
+        <button type="submit" class="btn btn-primary">&#43; Add to Collection</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Toast Notification -->
+<div id="toast" class="toast">
+  <span>&#10003;</span>
+  <span id="toast-msg">Saved successfully!</span>
+</div>
+
+<script src="products.js"></script>
+<script>
+let productsData = JSON.parse(JSON.stringify(RSA_PRODUCTS));
+let modifiedIds = new Set();
+let currentFilter = 'all';
+
+function initCounts() {
+  document.getElementById('count-all').textContent = productsData.length;
+  document.getElementById('count-canvas').textContent = productsData.filter(p => p.category === 'Canvas').length;
+  document.getElementById('count-neon').textContent = productsData.filter(p => p.category === 'Neon Light').length;
+}
+
+function renderList() {
+  const container = document.getElementById('product-list');
+  container.innerHTML = '';
+
+  const search = document.getElementById('search-box').value.toLowerCase().trim();
+
+  let filtered = productsData.filter(p => {
+    if (search && !p.title.toLowerCase().includes(search)) return false;
+    if (currentFilter === 'Canvas') return p.category === 'Canvas';
+    if (currentFilter === 'Neon Light') return p.category === 'Neon Light';
+    if (currentFilter === 'no-yt') return !p.yt_id || p.yt_id.trim() === '';
+    return true;
+  });
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:var(--fg-muted); padding:40px;">No paintings found.</p>';
+    return;
+  }
+
+  filtered.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'item-card' + (modifiedIds.has(p.id) ? ' modified' : '');
+    card.id = `card-${p.id}`;
+
+    const discountPct = (p.original_price && p.original_price > p.price)
+      ? Math.round(((p.original_price - p.price) / p.original_price) * 100)
+      : null;
+
+    const discountHtml = discountPct ? `<span class="discount-pill" id="disc-${p.id}">(${discountPct}% OFF)</span>` : `<span class="discount-pill" id="disc-${p.id}"></span>`;
+
+    const vFormatted = p.views ? (p.views >= 1000000 ? (p.views/1000000).toFixed(1) + 'M' : (p.views/1000).toFixed(0) + 'K') : null;
+    const lFormatted = p.likes ? (p.likes >= 1000000 ? (p.likes/1000000).toFixed(1) + 'M' : (p.likes/1000).toFixed(0) + 'K') : null;
+    const statsHtml = (vFormatted || lFormatted)
+      ? `<div class="yt-stats-pill"><span>&#9654; ${vFormatted || 0}</span><span>&middot;</span><span>&#9829; ${lFormatted || 0}</span></div>`
+      : '';
+
+    card.innerHTML = `
+      <div class="item-img-col">
+        <img src="${p.img}" alt="${p.title}" class="item-thumb" onerror="this.src='images/artist.png'">
+        <span class="item-id-badge">#${p.id}</span>
+      </div>
+      <div class="item-fields-col">
+        <div>
+          <label class="field-label">Title</label>
+          <input type="text" class="field-input item-title-input" value="${escapeHtml(p.title)}" onchange="updateField(${p.id}, 'title', this.value)">
+        </div>
+
+        <div class="field-row">
+          <div>
+            <label class="field-label">Price (₹)</label>
+            <input type="number" class="field-input" value="${p.price || 0}" onchange="updatePrice(${p.id}, this.value)">
+          </div>
+          <div>
+            <label class="field-label">M.R.P. (₹) ${discountHtml}</label>
+            <input type="number" class="field-input" value="${p.original_price || ''}" placeholder="Crossed price" onchange="updateMrp(${p.id}, this.value)">
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div>
+            <label class="field-label">Size</label>
+            <input type="text" class="field-input" value="${escapeHtml(p.size || '')}" placeholder="e.g. 50x56 cm" onchange="updateField(${p.id}, 'size', this.value)">
+          </div>
+          <div>
+            <label class="field-label">Category</label>
+            <select class="field-select" onchange="updateField(${p.id}, 'category', this.value)">
+              <option value="Neon Light" ${p.category === 'Neon Light' ? 'selected' : ''}>Neon Light</option>
+              <option value="Canvas" ${p.category === 'Canvas' ? 'selected' : ''}>Canvas</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="field-label">YouTube Short Link / ID</label>
+          <div class="yt-field-wrap">
+            <input type="text" class="field-input" value="${escapeHtml(p.yt_id || '')}" placeholder="Short ID or URL" onchange="updateYt(${p.id}, this.value)">
+            ${p.yt_id ? `<a href="https://youtube.com/watch?v=${p.yt_id}" target="_blank" class="yt-link-btn" title="Watch Short">&#9654;</a>` : ''}
+          </div>
+          ${statsHtml}
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function updateField(id, field, value) {
+  const p = productsData.find(x => x.id === id);
+  if (!p) return;
+  p[field] = value;
+  markModified(id);
+}
+
+function updatePrice(id, val) {
+  const p = productsData.find(x => x.id === id);
+  if (!p) return;
+  p.price = parseInt(val, 10) || 0;
+  markModified(id);
+  recalcDiscount(id);
+}
+
+function updateMrp(id, val) {
+  const p = productsData.find(x => x.id === id);
+  if (!p) return;
+  p.original_price = val ? parseInt(val, 10) : undefined;
+  markModified(id);
+  recalcDiscount(id);
+}
+
+function recalcDiscount(id) {
+  const p = productsData.find(x => x.id === id);
+  const el = document.getElementById(`disc-${id}`);
+  if (!el || !p) return;
+  if (p.original_price && p.original_price > p.price) {
+    const pct = Math.round(((p.original_price - p.price) / p.original_price) * 100);
+    el.textContent = `(${pct}% OFF)`;
+  } else {
+    el.textContent = '';
+  }
+}
+
+function updateYt(id, val) {
+  const p = productsData.find(x => x.id === id);
+  if (!p) return;
+  // Parse ID if full URL was pasted
+  let cleanId = val.trim();
+  if (cleanId.includes('shorts/')) {
+    cleanId = cleanId.split('shorts/')[1].split(/[?&]/)[0];
+  } else if (cleanId.includes('watch?v=')) {
+    cleanId = cleanId.split('watch?v=')[1].split(/[?&]/)[0];
+  } else if (cleanId.includes('youtu.be/')) {
+    cleanId = cleanId.split('youtu.be/')[1].split(/[?&]/)[0];
+  }
+  p.yt_id = cleanId;
+  markModified(id);
+}
+
+function markModified(id) {
+  modifiedIds.add(id);
+  document.getElementById(`card-${id}`)?.classList.add('modified');
+  document.getElementById('unsaved-count').textContent = modifiedIds.size;
+}
+
+function setFilter(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderList();
+}
+
+function filterItems() {
+  renderList();
+}
+
+// ── SAVE TO SERVER / GITHUB ──
+async function saveAll() {
+  const isGitHub = window.location.hostname.includes('github.io');
+
+  if (isGitHub) {
+    let token = localStorage.getItem('rsa_gh_token');
+    if (!token) {
+      token = prompt('To save & publish directly from mobile phone to GitHub Pages, enter your GitHub Personal Access Token (PAT):\n(Saved securely only on your device browser):');
+      if (!token) return;
+      localStorage.setItem('rsa_gh_token', token.trim());
+    }
+
+    showToast('Saving to GitHub Pages...');
+
+    // Generate products.js code
+    const codeLines = [
+      "// RSA Products Data",
+      "const RSA_CONFIG = {",
+      "  whatsapp: '918789281276',",
+      "  ytApiKey: '' // Handled by GitHub Actions.",
+      "};",
+      "",
+      "const RSA_PRODUCTS = ["
+    ];
+    for (const p of productsData) {
+      codeLines.push("  {");
+      codeLines.push(`    id: ${p.id},`);
+      codeLines.push(`    title: ${JSON.stringify(p.title)},`);
+      codeLines.push(`    img: ${JSON.stringify(p.img)},`);
+      if (p.img2) codeLines.push(`    img2: ${JSON.stringify(p.img2)},`);
+      codeLines.push(`    price: ${p.price},`);
+      if (p.original_price) codeLines.push(`    original_price: ${p.original_price},`);
+      codeLines.push(`    category: ${JSON.stringify(p.category)},`);
+      codeLines.push(`    type: ${JSON.stringify(p.type || 'neon')},`);
+      if (p.size) codeLines.push(`    size: ${JSON.stringify(p.size)},`);
+      if (p.description) codeLines.push(`    description: ${JSON.stringify(p.description)},`);
+      const ytId = JSON.stringify(p.yt_id || '');
+      codeLines.push(`    yt_id: ${ytId}, views: ${p.views || 0}, likes: ${p.likes || 0}`);
+      codeLines.push("  },");
+    }
+    codeLines.push("];\n");
+    const fullCode = codeLines.join("\n");
+
+    try {
+      const getRes = await fetch('https://api.github.com/repos/bilalcodess/Rashid-Sketch-Art/contents/products.js', {
+        headers: {
+          'Authorization': `token ${token.trim()}`,
+          'Accept': 'application/vnd.github.v3+json'
+        }
+      });
+      if (!getRes.ok) throw new Error('GitHub API Error: ' + getRes.statusText);
+      const fileData = await getRes.json();
+
+      const putRes = await fetch('https://api.github.com/repos/bilalcodess/Rashid-Sketch-Art/contents/products.js', {
+        method: 'PUT',
+        headers: {
+          'Authorization': `token ${token.trim()}`,
+          'Accept': 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: 'Update paintings data from mobile admin',
+          content: btoa(unescape(encodeURIComponent(fullCode))),
+          sha: fileData.sha
+        })
+      });
+      if (!putRes.ok) throw new Error('Failed to commit to GitHub: ' + putRes.statusText);
+
+      modifiedIds.clear();
+      document.querySelectorAll('.item-card.modified').forEach(c => c.classList.remove('modified'));
+      document.getElementById('unsaved-count').textContent = '0';
+      showToast('✓ Saved & published live to GitHub Pages!');
+    } catch (err) {
+      alert('GitHub Save Error: ' + err.message);
+    }
+    return;
+  }
+
+  // Local / Wi-Fi server save
+  try {
+    const res = await fetch('/api/save-products', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ products: productsData })
+    });
+    if (!res.ok) throw new Error('Save failed: ' + res.statusText);
+    
+    modifiedIds.clear();
+    document.querySelectorAll('.item-card.modified').forEach(c => c.classList.remove('modified'));
+    document.getElementById('unsaved-count').textContent = '0';
+    showToast('Saved all changes to products.js successfully!');
+  } catch (err) {
+    console.error(err);
+    alert('Save error: ' + err.message + '\nMake sure server.py is running on port 8000.');
+  }
+}
+
+// ── ADD NEW PAINTING MODAL ──
+let newUploadedBase64 = null;
+let newUploadedFileName = null;
+
+function openNewModal() {
+  document.getElementById('new-modal').classList.remove('hidden');
+}
+function closeNewModal() {
+  document.getElementById('new-modal').classList.add('hidden');
+}
+
+function previewUpload(input) {
+  if (input.files && input.files[0]) {
+    const file = input.files[0];
+    newUploadedFileName = file.name;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      newUploadedBase64 = e.target.result;
+      const prev = document.getElementById('new-img-preview');
+      prev.src = newUploadedBase64;
+      prev.style.display = 'block';
+      document.getElementById('upload-label').textContent = file.name;
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+async function handleAddNew(e) {
+  e.preventDefault();
+  let imgPath = 'images/artist.png';
+
+  if (newUploadedBase64 && newUploadedFileName) {
+    try {
+      const upRes = await fetch('/api/upload-image', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filename: newUploadedFileName, data: newUploadedBase64 })
+      });
+      const upData = await upRes.json();
+      if (upData.path) imgPath = upData.path;
+    } catch (err) {
+      console.warn('Image upload error, fallback to path', err);
+      imgPath = `images/${newUploadedFileName}`;
+    }
+  }
+
+  const maxId = productsData.reduce((m, p) => Math.max(m, p.id || 0), 0);
+  const newId = maxId + 1;
+
+  let ytVal = document.getElementById('new-yt').value.trim();
+  if (ytVal.includes('shorts/')) ytVal = ytVal.split('shorts/')[1].split(/[?&]/)[0];
+  else if (ytVal.includes('watch?v=')) ytVal = ytVal.split('watch?v=')[1].split(/[?&]/)[0];
+
+  const newP = {
+    id: newId,
+    title: document.getElementById('new-title').value.trim(),
+    img: imgPath,
+    price: parseInt(document.getElementById('new-price').value, 10) || 0,
+    category: document.getElementById('new-category').value,
+    type: document.getElementById('new-category').value === 'Canvas' ? 'canvas' : 'neon',
+    size: document.getElementById('new-size').value.trim() || undefined,
+    description: document.getElementById('new-desc').value.trim() || undefined,
+    yt_id: ytVal || '',
+    views: 0,
+    likes: 0
+  };
+
+  const mrpVal = document.getElementById('new-mrp').value.trim();
+  if (mrpVal) newP.original_price = parseInt(mrpVal, 10);
+
+  productsData.unshift(newP);
+  markModified(newId);
+  initCounts();
+  renderList();
+  closeNewModal();
+  showToast(`Added "${newP.title}"! Remember to tap Save All.`);
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initCounts();
+  renderList();
+});
+</script>
+</body>
+</html>

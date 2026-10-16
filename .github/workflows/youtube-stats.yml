@@ -2,8 +2,9 @@ name: Update YouTube Stats
 
 on:
   schedule:
-    - cron: '0 * * * *' # Run at minute 0 past every hour
+    - cron: '0 0 * * *' # Run once daily at 00:00 UTC
   workflow_dispatch: # Allow manual trigger
+
 
 jobs:
   update-stats:

@@ -8,23 +8,23 @@ PRODUCTS_FILE = 'products.js'
 STATS_FILE = 'stats.json'
 
 if not API_KEY:
-    print("Error: YOUTUBE_API_KEY environment variable is not set.")
-    exit(1)
+    print("Notice: YOUTUBE_API_KEY secret is not set in GitHub repository secrets. Skipping stats update without error.")
+    exit(0)
 
 # Extract YouTube IDs from products.js
 try:
     with open(PRODUCTS_FILE, 'r', encoding='utf-8') as f:
         content = f.read()
 except Exception as e:
-    print(f"Error reading {PRODUCTS_FILE}: {e}")
-    exit(1)
+    print(f"Notice reading {PRODUCTS_FILE}: {e}")
+    exit(0)
 
-# Look for yt_id: '...'
-yt_ids = set(re.findall(r"yt_id:\s*'([^']+)'", content))
+# Look for yt_id: '...' or yt_id: "..."
+yt_ids = set(re.findall(r'yt_id:\s*["\']([^"\']+)["\']', content))
 yt_ids = [vid for vid in yt_ids if vid]
 
 if not yt_ids:
-    print("No YouTube IDs found.")
+    print("Notice: No YouTube IDs found in products.js.")
     exit(0)
 
 # Fetch stats from YouTube API
@@ -36,7 +36,7 @@ for i in range(0, len(yt_ids), batch_size):
     url = f"https://www.googleapis.com/youtube/v3/videos?part=statistics&id={','.join(batch)}&key={API_KEY}"
     
     try:
-        req = urllib.request.Request(url)
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
         with urllib.request.urlopen(req) as response:
             data = json.loads(response.read().decode('utf-8'))
             for item in data.get('items', []):
@@ -47,11 +47,20 @@ for i in range(0, len(yt_ids), batch_size):
                     'likes': int(stats.get('likeCount', 0))
                 }
     except Exception as e:
-        print(f"Failed to fetch batch {batch}: {e}")
+        print(f"Notice: Failed to fetch batch {batch}: {e}")
 
 if all_stats:
+    existing = {}
+    if os.path.exists(STATS_FILE):
+        try:
+            with open(STATS_FILE, 'r', encoding='utf-8') as f:
+                existing = json.load(f)
+        except Exception:
+            pass
+    existing.update(all_stats)
     with open(STATS_FILE, 'w', encoding='utf-8') as f:
-        json.dump(all_stats, f, indent=2)
+        json.dump(existing, f, indent=2)
     print(f"Successfully updated stats for {len(all_stats)} videos.")
 else:
-    print("No stats were fetched.")
+    print("No stats were updated.")
+

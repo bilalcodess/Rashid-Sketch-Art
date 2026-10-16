@@ -6,15 +6,28 @@ const RSA_CONFIG = {
 
 const RSA_PRODUCTS = [
   {
+    id: 61,
+    title: "Allah Hu Akbar Calligraphy Gold leaf",
+    img: "images/Allah_Hu_Akbar_Calligraphy_Gold_leaf1_jpeg.jpeg",
+    img2: "images/Allah_Hu_Akbar_Calligraphy_Gold_leaf2_jpeg.jpeg",
+    price: 2499,
+    original_price: 6499,
+    category: "Canvas",
+    type: "canvas",
+    size: "22x25",
+    description: "Beautiful handmade Allahu Akbar Islamic calligraphy featuring shimmering gold leaf lettering on a vibrant, multicoloured canvas. Perfect for elegant home décor, prayer rooms, or gifting on special occasions.",
+    yt_id: "amp8e9xMVmE", views: 0, likes: 0
+  },
+  {
     id: 1,
     title: "Surah Al-Ikhlas – Gold Leaf Canvas",
     img: "images/Surah Al-Ikhlas calligraphy gold leaf Canvas painting1.jpeg",
     img2: "images/Surah Al-Ikhlas calligraphy gold leaf Canvas painting2.jpeg",
     price: 7999,
     original_price: 13330,
-    size: "50×56 cm",
     category: "Canvas",
     type: "canvas",
+    size: "50×56 cm",
     description: "A breathtaking hand-painted rendition of Surah Al-Ikhlas on premium canvas, adorned with genuine gold leaf accents. The sacred verses declaring the oneness of Allah shimmer under light, creating a divine centrepiece for any room. Each brushstroke is crafted with devotion — a true collector's masterpiece.",
     yt_id: "wjT3Ei1AG7s", views: 25606, likes: 1592
   },
@@ -25,9 +38,9 @@ const RSA_PRODUCTS = [
     img2: "images/Bismillah ir-Rahman ir-Rahim gold leaf Canvas calligraphy2.jpeg",
     price: 5999,
     original_price: 9999,
-    size: "40×35 cm",
     category: "Canvas",
     type: "canvas",
+    size: "40×35 cm",
     description: "The most recited phrase in Islam — \"In the name of Allah, the Most Gracious, the Most Merciful\" — brought to life on canvas with luxurious gold leaf detailing. This elegant piece radiates warmth and blessings, perfect for an entryway or living space.",
     yt_id: "cw8p4npm6NY", views: 30480, likes: 1430
   },
@@ -38,9 +51,9 @@ const RSA_PRODUCTS = [
     img2: "images/Surah Ar-Rahman Canvas  Calligraphy2.jpeg",
     price: 5999,
     original_price: 9999,
-    size: "41×38 cm",
     category: "Canvas",
     type: "canvas",
+    size: "41×38 cm",
     description: "A majestic canvas calligraphy of Surah Ar-Rahman, known as the \"Beauty of the Quran.\" The flowing Arabic script is rendered with precision and grace on quality canvas, capturing the surah's timeless message of gratitude and divine mercy.",
     yt_id: "cw8p4npm6NY", views: 30480, likes: 1430
   },
@@ -51,9 +64,9 @@ const RSA_PRODUCTS = [
     img2: "images/Al Hamdu Lillah in gold leaf Canvas painting2.jpeg",
     price: 3999,
     original_price: 6665,
-    size: "25×32 cm",
     category: "Canvas",
     type: "canvas",
+    size: "25×32 cm",
     description: "\"All praise is due to Allah\" — this powerful declaration of gratitude is hand-painted on premium canvas and embellished with real gold leaf. The rich tones and metallic shimmer make this piece a stunning expression of faith and thankfulness.",
     yt_id: "f51mcRgY5Hw", views: 182476, likes: 3862
   },
@@ -64,7 +77,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d735 cm",
+    size: "26×35 cm",
     description: "A luminous modern calligraphy of the sacred name \"Allah\" with glowing neon accents (26×35 cm). Vibrant pigments radiate under ambient light, creating a serene, spiritual aura in any home or office.",
     yt_id: "8eHDgAz4SsI", views: 398903, likes: 10720
   },
@@ -75,7 +88,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d735 cm",
+    size: "26×35 cm",
     description: "A dynamic composition featuring repeated \"Allah\" calligraphy illuminated with neon vibrancy (26×35 cm). The layered script creates depth and energy, making the divine remembrance come alive on your wall.",
     yt_id: "0rVfYabOoOg", views: 57501, likes: 2253
   },
@@ -86,7 +99,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d735 cm",
+    size: "26×35 cm",
     description: "Traditional Arabic script meets contemporary neon artistry (26×35 cm). The flowing contours of the divine name glow with intense colour, bridging classic Islamic heritage with modern interior aesthetics.",
     yt_id: "62tq7UMsZ7U", views: 112811, likes: 5463
   },
@@ -97,7 +110,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d735 cm",
+    size: "26×35 cm",
     description: "An electrifying piece where neon lights trace the sacred curves of Allah's name (26×35 cm). The neon illumination produces an enchanting ambient glow, casting sacred shadows and uplifting the spirit of any room.",
     yt_id: "VVKXXloytkM", views: 37121, likes: 1219
   },
@@ -108,7 +121,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d735 cm",
+    size: "26×35 cm",
     description: "Bold, geometric Kufic script reimagined with vivid neon lighting (26×35 cm). The architectural lines of Kufic calligraphy combined with radiant neon create a striking focal point that commands attention.",
     yt_id: "SUzl78A9_I8", views: 94890, likes: 4013
   },
@@ -119,7 +132,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d735 cm",
+    size: "26×35 cm",
     description: "A captivating neon interpretation of the name \"Allah\" (26×35 cm). Vibrant fluorescent strokes against a dark background create a dramatic glow-in-the-dark effect — a piece that transforms from elegant calligraphy by day to a luminous beacon by night.",
     yt_id: "D7kUHGqTkBs", views: 711455, likes: 21880
   },
@@ -130,7 +143,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d735 cm",
+    size: "26×35 cm",
     description: "\"Allah is the Greatest\" — the Takbir rendered in bold, glowing neon calligraphy (26×35 cm). A statement of supreme faith, the neon illumination imparts a majestic presence to this eternal declaration.",
     yt_id: "qRT469FEn08", views: 802211, likes: 23209
   },
@@ -141,7 +154,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d735 cm",
+    size: "26×35 cm",
     description: "A glowing expression of gratitude — Alhamdulillah in radiant neon calligraphy (26×35 cm). Its warm, luminous tones bring positive energy and spiritual grounding into any home or workspace.",
     yt_id: "5gGoCXcvYts", views: 226056, likes: 2977
   },
@@ -152,7 +165,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d736 cm",
+    size: "26×36 cm",
     description: "A larger format Alhamdulillah calligraphy (26×36 cm) with radiant neon colours. The slightly taller canvas allows for more elaborate flourishes and decorative elements, producing a commanding centrepiece that glows with spiritual warmth.",
     yt_id: "MPlk-r2rD3A", views: 631419, likes: 19180
   },
@@ -163,7 +176,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d735 cm",
+    size: "26×35 cm",
     description: "A unique artistic rendition of the name \"Allah\" symbolising Tawheed (oneness) in flowing neon calligraphy (26×35 cm). The interplay of neon hues and shadows creates depth and movement, as if the sacred name is emerging from light itself.",
     yt_id: "GOaPfsTVsws", views: 15696082, likes: 227143
   },
@@ -174,7 +187,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d736 cm",
+    size: "26×36 cm",
     description: "The divine name \"Allah\" in an expanded 26×36 cm format with vivid neon colours. The additional height gives the calligraphy room to breathe, with sweeping strokes that radiate a heavenly glow under dim or UV light.",
     yt_id: "jsCluWznOp4", views: 34829, likes: 2232
   },
@@ -185,7 +198,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d735 cm",
+    size: "26×35 cm",
     description: "Start every day with blessings: Bismillah rendered in radiant neon calligraphy (26×35 cm). The sacred opening phrase glows with warmth, inviting peace and prosperity into your living environment.",
     yt_id: "St1CFVBNuIY", views: 147929, likes: 4379
   },
@@ -196,7 +209,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d735 cm",
+    size: "26×35 cm",
     description: "An exquisite blend of traditional Arabic letterforms and modern neon illumination (26×35 cm). Each stroke is painted by hand with precision, then highlighted with neon pigments that burst into life in dim lighting.",
     yt_id: "Ev_byOTi_AU", views: 108817, likes: 2881
   },
@@ -207,7 +220,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d735 cm",
+    size: "26×35 cm",
     description: "A magnificent Islamic calligraphy piece illuminated with neon hues (26×35 cm). The sacred script radiates spiritual power and artistic excellence, making it a proud statement piece for any home.",
     yt_id: "oVYFXSJteg4", views: 68052, likes: 2481
   },
@@ -218,7 +231,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d735 cm",
+    size: "26×35 cm",
     description: "A stunning original calligraphy artwork with integrated neon illumination (26×35 cm). The glowing accents highlight the rhythm and movement of the Arabic script, creating a mesmerizing visual display.",
     yt_id: "GVP-ugknV-w", views: 269987, likes: 8072
   },
@@ -229,7 +242,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d735 cm",
+    size: "26×35 cm",
     description: "Commemorating the blessed birth of the Prophet Muhammad ﷺ in glowing neon calligraphy (26×35 cm). A festive, spiritually uplifting piece that radiates joy, devotion, and reverence.",
     yt_id: "t3CaVfY0r9Y", views: 4295881, likes: 73996
   },
@@ -240,7 +253,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d735 cm",
+    size: "26×35 cm",
     description: "A heartfelt declaration — \"I Love Allah\" — painted in radiant neon calligraphy (26×35 cm). The warmth of devotion meets the brilliance of neon art, creating a piece that glows with love and spiritual connection in any dim environment.",
     yt_id: "EJVF5RXADgw", views: 137111, likes: 2749
   },
@@ -251,7 +264,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d735 cm",
+    size: "26×35 cm",
     description: "\"God willing\" — the beloved phrase Insha'Allah in luminous neon calligraphy on A4 art paper (26×35 cm). A reminder of faith and surrender, this piece radiates hope and trust in every glowing brushstroke.",
     yt_id: "EuVGjY-bnK4", views: 9808231, likes: 181231
   },
@@ -262,7 +275,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d735 cm",
+    size: "26×35 cm",
     description: "\"May His glory be glorified\" — the honorific Jalla Jalaluhu in vibrant neon calligraphy (26×35 cm). The majestic phrase is elevated by luminous pigments that catch the eye and illuminate the heart in any setting.",
     yt_id: "kx35K-Ce9ho", views: 37558, likes: 1596
   },
@@ -273,7 +286,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d735 cm",
+    size: "26×35 cm",
     description: "A glowing tribute to the City of the Prophet — Madina al-Munawwarah in neon calligraphy (26×35 cm). The green and golden neon hues evoke the serenity and peace of the Prophet's Mosque.",
     yt_id: "8-I48mxVK28", views: 45763, likes: 1311
   },
@@ -284,7 +297,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d735 cm",
+    size: "26×35 cm",
     description: "\"What Allah has willed\" — the protective phrase MashaAllah in dazzling neon calligraphy (26×35 cm). Believed to ward off the evil eye and invite blessings, this vibrant artwork is as spiritually powerful as it is visually captivating.",
     yt_id: "-lmAtDZ5k7I", views: 168772, likes: 6422
   },
@@ -295,7 +308,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d735 cm",
+    size: "26×35 cm",
     description: "The blessed name of the Prophet Muhammad ﷺ in radiant neon calligraphy (26×35 cm). Every stroke is painted with profound reverence, producing an artwork that glows with spiritual light and serenity.",
     yt_id: "m-UKkyAPNsQ", views: 5653409, likes: 111653
   },
@@ -306,7 +319,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d736 cm",
+    size: "26×36 cm",
     description: "An expanded 26×36 cm neon calligraphy of the name Muhammad ﷺ. The larger format allows for more ornate detailing and bolder neon strokes, creating a commanding presence that radiates peace and blessings on any wall.",
     yt_id: "UbkSuBUeJB8", views: 1664270, likes: 34338
   },
@@ -317,7 +330,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d735 cm",
+    size: "26×35 cm",
     description: "The name Muhammad ﷺ in the angular Kufic script style, illuminated with neon colours on A4 art paper (26×35 cm). The geometric Kufic forms take on a modern edge under neon treatment — a bridge between ancient tradition and contemporary art.",
     yt_id: "Yg2xfCwdvUM", views: 75058912, likes: 1368470
   },
@@ -328,7 +341,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d735 cm",
+    size: "26×35 cm",
     description: "A reverent neon calligraphy of Muhammad SAW (26×35 cm). The salutation upon the Prophet is rendered in flowing script with glowing pigments, creating a piece that honours his legacy with every soft ray of neon light.",
     yt_id: "a89d9W116iY", views: 1358585, likes: 42992
   },
@@ -339,7 +352,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d735 cm",
+    size: "26×35 cm",
     description: "\"Muhammad is the Messenger of Allah\" — the second half of the Shahadah in brilliant neon calligraphy (26×35 cm). A centerpiece of faith, rendered with precision and a stunning fluorescent glow.",
     yt_id: "prvrz9MWFUU", views: 50731, likes: 1070
   },
@@ -350,7 +363,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d735 cm",
+    size: "26×35 cm",
     description: "A tribute to the Prophet Mohammad S.A.W in glowing neon calligraphy (26×35 cm). The reverent script is amplified by fluorescent pigments that emit a peaceful glow, making it an ideal companion for meditation and prayer spaces.",
     yt_id: "mQFpc64ypy4", views: 219944, likes: 8668
   },
@@ -361,7 +374,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d735 cm",
+    size: "26×35 cm",
     description: "A celebratory Ramadan calligraphy in vivid neon colours (26×35 cm). Capture the spirit of the holy month with this luminous piece that glows with the blessings of fasting, prayer, and reflection — a perfect Ramadan décor or timeless keepsake.",
     yt_id: "92uj0TFbwLA", views: 37863, likes: 910
   },
@@ -372,7 +385,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d735 cm",
+    size: "26×35 cm",
     description: "\"Blessed Ramadan\" — the traditional greeting rendered as a work of art in glowing neon (26×35 cm). Warm, festive, and deeply spiritual, it brings the joy of Ramadan into your home throughout the year.",
     yt_id: "3dNSjhp-6_A", views: 270891, likes: 4219
   },
@@ -383,7 +396,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d735 cm",
+    size: "26×35 cm",
     description: "\"Glory be to Allah\" — the Tasbih in luminous neon calligraphy (26×35 cm). A piece that inspires awe and wonder, just as the phrase itself does. The neon glow adds a celestial quality, as if the words are written in light.",
     yt_id: "WL4i21dHxtc", views: 759739, likes: 35205
   },
@@ -394,7 +407,7 @@ const RSA_PRODUCTS = [
     price: 7500,
     category: "Neon Light",
     type: "neon",
-    size: "26\u00d735 cm",
+    size: "26×35 cm",
     description: "\"O Allah!\" — a heartfelt call to the Almighty in vibrant neon calligraphy (26×35 cm). The supplication comes alive with glowing colours that pulse with sincerity and devotion, perfect for creating a personal prayer corner.",
     yt_id: "EuVGjY-bnK4", views: 9808231, likes: 181231
   },

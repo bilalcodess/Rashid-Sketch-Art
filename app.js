@@ -356,8 +356,9 @@ function applyStats(statsMap) {
 // INIT
 // ──────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-  const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
   const btn = document.getElementById('theme-toggle');
+
   if (btn) btn.textContent = currentTheme === 'light' ? '\u263E' : '\u2600';
   renderGrid('product-grid', 'all');
   fetchYouTubeStats();
@@ -367,7 +368,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // THEME TOGGLE
 // ──────────────────────────────────────────────────
 function toggleTheme() {
-  const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
   const newTheme = currentTheme === 'light' ? 'dark' : 'light';
   document.documentElement.setAttribute('data-theme', newTheme);
   localStorage.setItem('rsa_theme', newTheme);
@@ -378,11 +379,10 @@ function toggleTheme() {
   }
 }
 
-// Load saved theme
-const savedTheme = localStorage.getItem('rsa_theme');
-if (savedTheme === 'dark') {
-  document.documentElement.setAttribute('data-theme', 'dark');
-}
+// Load saved theme (defaults to luxury dark obsidian)
+const savedTheme = localStorage.getItem('rsa_theme') || 'dark';
+document.documentElement.setAttribute('data-theme', savedTheme);
+
 
 // ──────────────────────────────────────────────────
 // MOBILE MENU

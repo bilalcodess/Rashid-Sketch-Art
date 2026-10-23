@@ -1,48 +1,75 @@
 /* ============================================================
    RSA STORE – MASTER STYLESHEET
-   Light mode default · Dark mode toggle · Cinzel thin font
-   Smooth color transitions · White background · Elegant
+   Luxury Crimson Theme (Gatwick Express Red #dc0d1d)
+   Deep Obsidian Black · Cinzel Typography · Ultra-Premium
    ============================================================ */
+
+/* ── PRESERVED GOLD LUXURY THEME TOKENS (BACKUP) ─────────────
+   To restore gold theme, swap these values:
+   Light mode:
+     --gold: #b8860b; --gold-dark: #8b6508; --gold-light: #d4a94a; --gold-glow: rgba(184,134,11,0.08);
+   Dark mode:
+     --gold: #c9a84c; --gold-dark: #9a7530; --gold-light: #e0c06a; --gold-glow: rgba(201,168,76,0.12);
+   Full file backup also saved at: style.gold-backup.css
+   ──────────────────────────────────────────────────────────── */
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
   --bg:        #ffffff;
-  --bg2:       #faf9f7;
-  --bg3:       #f3f1ed;
-  --fg:        #1a1a1a;
-  --fg2:       #555555;
-  --fg3:       #999999;
-  --gold:      #b8860b;
-  --gold-dark: #8b6508;
-  --gold-light:#d4a94a;
-  --gold-glow: rgba(184,134,11,0.08);
+  --bg2:       #fbf9f8;
+  --bg3:       #f4efee;
+  --fg:        #121316;
+  --fg2:       #50525d;
+  --fg3:       #8a8d9a;
+
+  /* Gatwick Express Brand Red & Luxury Red Palette */
+  --red:        #dc0d1d;
+  --red-dark:   #9e0a16;
+  --red-light:  #f02838;
+  --red-glow:   rgba(220, 13, 29, 0.08);
+
+  /* Gold tokens aliased to Luxury Red for complete site compatibility */
+  --gold:       var(--red);
+  --gold-dark:  var(--red-dark);
+  --gold-light: var(--red-light);
+  --gold-glow:  var(--red-glow);
+
   --border:    rgba(0,0,0,0.08);
   --shadow:    0 2px 16px rgba(0,0,0,0.06);
-  --shadow-lg: 0 8px 32px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 32px rgba(220,13,29,0.08);
   --card-bg:   #ffffff;
-  --header-bg: rgba(255,255,255,0.80);
+  --header-bg: rgba(255,255,255,0.85);
   --radius:    10px;
   --rad-sm:    6px;
   --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 [data-theme="dark"] {
-  --bg:        #0f0f0f;
-  --bg2:       #171717;
-  --bg3:       #1e1e1e;
-  --fg:        #f0ece4;
-  --fg2:       #b8b0a2;
-  --fg3:       #7a7068;
-  --gold:      #c9a84c;
-  --gold-dark: #9a7530;
-  --gold-light:#e0c06a;
-  --gold-glow: rgba(201,168,76,0.12);
+  --bg:        #08080a;
+  --bg2:       #101116;
+  --bg3:       #171820;
+  --fg:        #f6f6f8;
+  --fg2:       #a6a9b4;
+  --fg3:       #686b77;
+
+  /* Gatwick Express Luxury Red on Deep Obsidian Black */
+  --red:        #dc0d1d;
+  --red-dark:   #8a0813;
+  --red-light:  #ff3a4d;
+  --red-glow:   rgba(220, 13, 29, 0.16);
+
+  /* Gold tokens aliased to Luxury Red */
+  --gold:       var(--red);
+  --gold-dark:  var(--red-dark);
+  --gold-light: var(--red-light);
+  --gold-glow:  var(--red-glow);
+
   --border:    rgba(255,255,255,0.08);
-  --shadow:    0 2px 16px rgba(0,0,0,0.3);
-  --shadow-lg: 0 8px 32px rgba(0,0,0,0.4);
-  --card-bg:   #171717;
-  --header-bg: rgba(15,15,15,0.80);
+  --shadow:    0 4px 20px rgba(0,0,0,0.55);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.75);
+  --card-bg:   #121319;
+  --header-bg: rgba(8,8,10,0.88);
 }
 
 html { scroll-behavior: smooth; }
@@ -85,28 +112,36 @@ header, .hero, .card-body, .pd-info, .about-page, .about-stats {
 }
 .logo {
   font-family: 'Cinzel', serif;
-  font-size: clamp(0.8rem, 3.2vw, 1rem);
-  font-weight: 400;
+  font-size: clamp(0.85rem, 3.4vw, 1.05rem);
+  font-weight: 500;
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 7px;
-  letter-spacing: 1.5px;
+  gap: 8px;
+  letter-spacing: 1.8px;
   text-transform: uppercase;
   white-space: nowrap;
   
-  /* Gradient text */
-  background: linear-gradient(to right, var(--fg), var(--gold-light));
+  /* Gatwick Express Luxury Crimson Gradient */
+  background: linear-gradient(135deg, #ffffff 15%, #ff4d5e 65%, #dc0d1d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 12px rgba(220, 13, 29, 0.35));
+}
+[data-theme="light"] .logo {
+  background: linear-gradient(135deg, #111114 10%, #dc0d1d 90%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 .logo-icon { 
-  font-size: 0.9rem;
-  /* Icon doesn't take gradient text clip well, so we reset it to a solid color */
+  font-size: 0.95rem;
   background: none;
-  -webkit-text-fill-color: var(--gold);
+  -webkit-text-fill-color: #dc0d1d;
+  filter: drop-shadow(0 0 8px rgba(220, 13, 29, 0.6));
 }
+
 
 .header-inner {
   display: flex;
@@ -249,17 +284,22 @@ header, .hero, .card-body, .pd-info, .about-page, .about-stats {
 /* ── BUTTONS ───────────────────────────────────────────────── */
 .btn-primary {
   display: inline-block; padding: 13px 32px;
-  background: var(--gold); color: #fff;
-  font-family: 'Cinzel', serif; font-size: 0.65rem; font-weight: 400;
+  background: linear-gradient(135deg, #f01c2c 0%, #dc0d1d 60%, #ab0817 100%);
+  color: #fff;
+  font-family: 'Cinzel', serif; font-size: 0.65rem; font-weight: 600;
   letter-spacing: 2px; text-transform: uppercase;
   border: none; border-radius: var(--rad-sm); cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s; text-decoration: none;
+  box-shadow: 0 4px 18px rgba(220, 13, 29, 0.35);
 }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(184,134,11,0.25); }
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 26px rgba(220, 13, 29, 0.55);
+}
 .btn-ghost {
   display: inline-block; padding: 13px 32px;
   background: transparent; color: var(--gold);
-  font-family: 'Cinzel', serif; font-size: 0.65rem; font-weight: 400;
+  font-family: 'Cinzel', serif; font-size: 0.65rem; font-weight: 500;
   letter-spacing: 2px; text-transform: uppercase;
   border: 1px solid var(--gold); border-radius: var(--rad-sm); cursor: pointer;
   transition: background 0.2s, transform 0.2s; text-decoration: none;
@@ -267,21 +307,23 @@ header, .hero, .card-body, .pd-info, .about-page, .about-stats {
 .btn-ghost:hover { background: var(--gold-glow); transform: translateY(-2px); }
 .btn-whatsapp {
   display: inline-flex; align-items: center; gap: 10px; padding: 14px 44px;
-  border: none;
-  font-family: 'Cinzel', serif; font-size: 0.75rem; font-weight: 400;
+  border: 1px solid rgba(220, 13, 29, 0.35);
+  font-family: 'Cinzel', serif; font-size: 0.75rem; font-weight: 600;
   letter-spacing: 2.5px; text-transform: uppercase;
   border-radius: 40px; cursor: pointer;
   transition: all var(--transition);
   text-decoration: none; width: fit-content; justify-content: center;
   margin-top: 8px;
   
-  /* Solid Gradient Fill */
-  background: linear-gradient(135deg, var(--fg), var(--gold-dark));
-  color: var(--bg);
+  /* Deep Obsidian Black to Gatwick Red Gradient */
+  background: linear-gradient(135deg, #15161e 0%, #29060b 45%, #dc0d1d 100%);
+  color: #ffffff;
+  box-shadow: 0 6px 24px rgba(220, 13, 29, 0.3);
 }
 .btn-whatsapp:hover { 
-  background: linear-gradient(135deg, var(--gold-dark), var(--fg));
-  transform: translateY(-2px); box-shadow: var(--shadow-lg); 
+  background: linear-gradient(135deg, #dc0d1d 0%, #ab0817 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 32px rgba(220, 13, 29, 0.6); 
 }
 
 /* ── COLLECTION ────────────────────────────────────────────── */
@@ -323,8 +365,14 @@ header, .hero, .card-body, .pd-info, .about-page, .about-stats {
   cursor: pointer;
   transition: all var(--transition);
 }
-.filter-tab:hover { border-color: var(--gold); color: var(--gold); }
-.filter-tab.active { background: var(--gold); color: #000; font-weight: 600; border-color: var(--gold); }
+.filter-tab:hover { border-color: var(--gold); color: var(--gold-light); }
+.filter-tab.active {
+  background: var(--gold);
+  color: #fff;
+  font-weight: 600;
+  border-color: var(--gold);
+  box-shadow: 0 0 16px rgba(220, 13, 29, 0.45);
+}
 
 /* ── GRID ──────────────────────────────────────────────────── */
 .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
@@ -337,20 +385,25 @@ header, .hero, .card-body, .pd-info, .about-page, .about-stats {
   overflow: hidden; cursor: pointer; display: flex; flex-direction: column;
   transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s, background var(--transition);
 }
-.product-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--gold); }
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.65), 0 0 20px rgba(220, 13, 29, 0.22);
+  border-color: rgba(220, 13, 29, 0.5);
+}
 .card-img-wrap { position: relative; width: 100%; padding-top: 110%; overflow: hidden; background: var(--bg3); }
 .card-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
 .product-card:hover .card-img { transform: scale(1.04); }
 .card-badge {
   position: absolute; top: 8px; left: 8px;
   background: var(--gold); color: #fff; font-family: 'Cinzel', serif;
-  font-size: 0.48rem; font-weight: 400; letter-spacing: 1px; text-transform: uppercase;
+  font-size: 0.48rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
   padding: 3px 8px; border-radius: 3px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
 }
 .card-badge.rising { background: #c0392b; }
 .card-badge.liked { background: #2980b9; }
 .card-badge.canvas { background: linear-gradient(135deg, #c59b27, #8e6d16); color: #fff; }
-.card-badge.neon { background: linear-gradient(135deg, #0288d1, #01579b); color: #fff; }
+.card-badge.neon { background: linear-gradient(135deg, #dc0d1d, #8a0813); color: #fff; }
 .card-badge.viewed { background: linear-gradient(135deg, #8e44ad, #5e2a77); color: #fff; }
 .card-type-label { display: none !important; }
 .card-body { padding: 12px 12px 14px; display: flex; flex-direction: column; flex: 1; text-align: center; align-items: center; }
@@ -375,12 +428,18 @@ header, .hero, .card-body, .pd-info, .about-page, .about-stats {
 .card-discount { font-family: 'Inter', sans-serif; font-size: 0.65rem; color: #27ae60; font-weight: 600; }
 .card-buy-btn {
   display: block; width: 100%; padding: 9px; background: var(--gold); color: #fff;
-  font-family: 'Cinzel', serif; font-size: 0.58rem; font-weight: 400;
+  font-family: 'Cinzel', serif; font-size: 0.58rem; font-weight: 600;
   letter-spacing: 1.5px; text-transform: uppercase; border: none; border-radius: 4px;
   cursor: pointer; text-align: center; text-decoration: none; margin-top: auto;
-  transition: background 0.2s, transform 0.15s;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 3px 12px rgba(220, 13, 29, 0.25);
 }
-.card-buy-btn:hover { background: var(--gold-dark); transform: translateY(-1px); }
+.card-buy-btn:hover {
+  background: var(--gold-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(220, 13, 29, 0.5);
+}
+
 
 /* ── PRODUCT DETAIL ────────────────────────────────────────── */
 .product-detail { max-width: 900px; margin: 0 auto; padding: 20px 16px 60px; }
@@ -706,11 +765,20 @@ header, .hero, .card-body, .pd-info, .about-page, .about-stats {
 
 /* ── FOOTER ────────────────────────────────────────────────── */
 .footer { border-top: 1px solid var(--border); padding: 36px 16px; text-align: center; background: var(--bg2); transition: background var(--transition), border-color var(--transition); }
-.footer-brand { font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: 400; color: var(--gold); margin-bottom: 6px; letter-spacing: 1.5px; }
+.footer-brand {
+  font-family: 'Cinzel', serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--gold);
+  margin-bottom: 6px;
+  letter-spacing: 1.8px;
+  text-shadow: 0 0 12px rgba(220, 13, 29, 0.35);
+}
 .footer-copy { font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 300; color: var(--fg3); margin-bottom: 12px; }
 .footer-socials { display: flex; justify-content: center; gap: 8px; align-items: center; }
 .footer-link { font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 300; color: var(--fg2); text-decoration: none; text-transform: uppercase; letter-spacing: 1px; transition: color var(--transition); }
 .footer-link:hover { color: var(--gold); }
 .footer-sep { color: var(--border); font-size: 0.8rem; }
+
 
 .hidden { display: none !important; }

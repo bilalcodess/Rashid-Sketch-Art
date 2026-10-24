@@ -97,8 +97,8 @@ header, .hero, .card-body, .pd-info, .about-page, .about-stats {
   background: var(--header-bg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-  transition: background var(--transition), border-color var(--transition);
+  border-bottom: none;
+  transition: background var(--transition);
 }
 .header-inner {
   max-width: 1100px;
@@ -222,9 +222,7 @@ header, .hero, .card-body, .pd-info, .about-page, .about-stats {
 .theme-toggle:hover { color: var(--gold); border-color: var(--gold); }
 
 /* ── HERO ──────────────────────────────────────────────────── */
-/* ── HERO (DAYLIGHT / LIGHT MODE) ───────────────────────────── */
 .hero {
-
   position: relative;
   min-height: 85vh;
   display: flex;
@@ -237,25 +235,61 @@ header, .hero, .card-body, .pd-info, .about-page, .about-stats {
   background: var(--bg);
   transition: background var(--transition);
 }
+
+/* ── HERO DUAL-LAYER BACKGROUND (CROSSFADE) ────────────────── */
 .hero-bg {
-  position: absolute; inset: 0;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero-bg-light,
+.hero-bg-dark {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transition: opacity var(--transition);
+}
+
+/* Daylight / Light Mode Texture */
+.hero-bg-light {
   background:
     radial-gradient(circle 750px at 0% 100%, rgba(220, 13, 29, 0.12) 0%, rgba(220, 13, 29, 0.04) 35%, transparent 70%),
     radial-gradient(circle 650px at 100% 95%, rgba(220, 13, 29, 0.09) 0%, rgba(220, 13, 29, 0.02) 40%, transparent 68%),
     radial-gradient(ellipse 75% 40% at 50% 100%, rgba(220, 13, 29, 0.06) 0%, transparent 70%),
     radial-gradient(circle 500px at 50% 35%, rgba(220, 13, 29, 0.03) 0%, transparent 60%),
     linear-gradient(180deg, #ffffff 0%, #fbf9f8 40%, #ffffff 100%);
-  transition: background var(--transition);
+  opacity: 1;
 }
-.hero-bg::after {
+
+/* Dark Mode Texture (Luxury Crimson & Obsidian Glow) */
+.hero-bg-dark {
+  background:
+    radial-gradient(circle 750px at 0% 100%, rgba(220, 13, 29, 0.45) 0%, rgba(150, 10, 20, 0.22) 35%, transparent 70%),
+    radial-gradient(circle 650px at 100% 95%, rgba(190, 12, 24, 0.35) 0%, rgba(110, 6, 14, 0.16) 40%, transparent 68%),
+    radial-gradient(ellipse 75% 40% at 50% 100%, rgba(170, 10, 22, 0.28) 0%, rgba(90, 5, 12, 0.12) 50%, transparent 75%),
+    radial-gradient(circle 500px at 50% 35%, rgba(130, 8, 16, 0.12) 0%, transparent 60%),
+    linear-gradient(180deg, #050103 0%, #080106 40%, #050104 100%);
+  opacity: 0;
+}
+
+.hero-bg-dark::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: transparent;
+  background: radial-gradient(ellipse 95% 75% at 50% 45%, transparent 40%, rgba(0, 0, 0, 0.72) 100%);
   pointer-events: none;
-  opacity: 0;
-  transition: opacity var(--transition);
 }
+
+/* Synchronized crossfade on theme change */
+[data-theme="dark"] .hero-bg-light {
+  opacity: 0;
+}
+[data-theme="dark"] .hero-bg-dark {
+  opacity: 1;
+}
+
 .hero-content { position: relative; z-index: 1; }
 .hero-sub {
   font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
@@ -298,21 +332,9 @@ header, .hero, .card-body, .pd-info, .about-page, .about-stats {
 .stat-num { display: block; font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 400; color: var(--gold); }
 .stat-label { font-family: 'Inter', sans-serif; font-size: 0.6rem; font-weight: 300; color: var(--fg3); letter-spacing: 1.5px; text-transform: uppercase; }
 
-/* ── HERO (DARK MODE) ───────────────────────────────────────── */
+/* ── HERO (DARK MODE OVERRIDES) ────────────────────────────── */
 [data-theme="dark"] .hero {
   background: #08080a;
-}
-[data-theme="dark"] .hero-bg {
-  background:
-    radial-gradient(circle 750px at 0% 100%, rgba(220, 13, 29, 0.45) 0%, rgba(150, 10, 20, 0.22) 35%, transparent 70%),
-    radial-gradient(circle 650px at 100% 95%, rgba(190, 12, 24, 0.35) 0%, rgba(110, 6, 14, 0.16) 40%, transparent 68%),
-    radial-gradient(ellipse 75% 40% at 50% 100%, rgba(170, 10, 22, 0.28) 0%, rgba(90, 5, 12, 0.12) 50%, transparent 75%),
-    radial-gradient(circle 500px at 50% 35%, rgba(130, 8, 16, 0.12) 0%, transparent 60%),
-    linear-gradient(180deg, #050103 0%, #080106 40%, #050104 100%);
-}
-[data-theme="dark"] .hero-bg::after {
-  opacity: 1;
-  background: radial-gradient(ellipse 95% 75% at 50% 45%, transparent 40%, rgba(0, 0, 0, 0.72) 100%);
 }
 [data-theme="dark"] .hero-sub {
   color: #ff3a4d;

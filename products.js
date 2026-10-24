@@ -68,7 +68,7 @@ const RSA_PRODUCTS = [
     type: "canvas",
     size: "25×32 cm",
     description: "\"All praise is due to Allah\" — this powerful declaration of gratitude is hand-painted on premium canvas and embellished with real gold leaf. The rich tones and metallic shimmer make this piece a stunning expression of faith and thankfulness.",
-    yt_id: "f51mcRgY5Hw", views: 182476, likes: 3862
+    yt_id: "cw8p4npm6NY", views: 182476, likes: 3862
   },
   {
     id: 5,

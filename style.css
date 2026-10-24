@@ -121,20 +121,23 @@ header, .hero, .card-body, .pd-info, .about-page, .about-stats {
   text-transform: uppercase;
   white-space: nowrap;
   
-  /* Gatwick Express Luxury Crimson Gradient */
+  /* Daylight / Light Mode: Ink black to Gatwick Red */
+  background: linear-gradient(135deg, #111114 10%, #dc0d1d 90%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 10px rgba(220, 13, 29, 0.2));
+}
+[data-theme="dark"] .logo {
+  /* Dark Mode: Diamond white to Gatwick Red */
   background: linear-gradient(135deg, #ffffff 15%, #ff4d5e 65%, #dc0d1d 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   filter: drop-shadow(0 0 12px rgba(220, 13, 29, 0.35));
 }
-[data-theme="light"] .logo {
-  background: linear-gradient(135deg, #111114 10%, #dc0d1d 90%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
 .logo-icon { display: none !important; }
+
 
 
 
@@ -219,7 +222,9 @@ header, .hero, .card-body, .pd-info, .about-page, .about-stats {
 .theme-toggle:hover { color: var(--gold); border-color: var(--gold); }
 
 /* ── HERO ──────────────────────────────────────────────────── */
+/* ── HERO (DAYLIGHT / LIGHT MODE) ───────────────────────────── */
 .hero {
+
   position: relative;
   min-height: 85vh;
   display: flex;
@@ -235,18 +240,21 @@ header, .hero, .card-body, .pd-info, .about-page, .about-stats {
 .hero-bg {
   position: absolute; inset: 0;
   background:
-    radial-gradient(circle 750px at 0% 100%, rgba(220, 13, 29, 0.45) 0%, rgba(150, 10, 20, 0.22) 35%, transparent 70%),
-    radial-gradient(circle 650px at 100% 95%, rgba(190, 12, 24, 0.35) 0%, rgba(110, 6, 14, 0.16) 40%, transparent 68%),
-    radial-gradient(ellipse 75% 40% at 50% 100%, rgba(170, 10, 22, 0.28) 0%, rgba(90, 5, 12, 0.12) 50%, transparent 75%),
-    radial-gradient(circle 500px at 50% 35%, rgba(130, 8, 16, 0.12) 0%, transparent 60%),
-    linear-gradient(180deg, #050103 0%, #080106 40%, #050104 100%);
+    radial-gradient(circle 750px at 0% 100%, rgba(220, 13, 29, 0.12) 0%, rgba(220, 13, 29, 0.04) 35%, transparent 70%),
+    radial-gradient(circle 650px at 100% 95%, rgba(220, 13, 29, 0.09) 0%, rgba(220, 13, 29, 0.02) 40%, transparent 68%),
+    radial-gradient(ellipse 75% 40% at 50% 100%, rgba(220, 13, 29, 0.06) 0%, transparent 70%),
+    radial-gradient(circle 500px at 50% 35%, rgba(220, 13, 29, 0.03) 0%, transparent 60%),
+    linear-gradient(180deg, #ffffff 0%, #fbf9f8 40%, #ffffff 100%);
+  transition: background var(--transition);
 }
 .hero-bg::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 95% 75% at 50% 45%, transparent 40%, rgba(0, 0, 0, 0.72) 100%);
+  background: transparent;
   pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--transition);
 }
 .hero-content { position: relative; z-index: 1; }
 .hero-sub {
@@ -254,27 +262,28 @@ header, .hero, .card-body, .pd-info, .about-page, .about-stats {
   font-size: 0.72rem;
   letter-spacing: 3.5px;
   text-transform: uppercase;
-  color: #ff3a4d;
+  color: var(--red);
   margin-bottom: 20px;
   font-weight: 700;
-  text-shadow: 0 0 16px rgba(220, 13, 29, 0.5);
+  text-shadow: 0 0 12px rgba(220, 13, 29, 0.2);
+  transition: color var(--transition), text-shadow var(--transition);
 }
 .hero-title {
   font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: clamp(2.6rem, 7.5vw, 4.8rem);
   font-weight: 800;
   line-height: 1.05;
-  color: #ffffff;
+  color: #111218;
   margin-bottom: 22px;
   letter-spacing: -0.035em;
-  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.85);
-  transition: color var(--transition);
+  text-shadow: none;
+  transition: color var(--transition), text-shadow var(--transition);
 }
 .hero-desc {
   font-family: 'Inter', sans-serif;
   font-size: 0.95rem;
   font-weight: 400;
-  color: #a9adc0;
+  color: #525666;
   line-height: 1.65;
   max-width: 400px;
   margin: 0 auto 36px;
@@ -288,6 +297,38 @@ header, .hero, .card-body, .pd-info, .about-page, .about-stats {
 .stat { text-align: center; }
 .stat-num { display: block; font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 400; color: var(--gold); }
 .stat-label { font-family: 'Inter', sans-serif; font-size: 0.6rem; font-weight: 300; color: var(--fg3); letter-spacing: 1.5px; text-transform: uppercase; }
+
+/* ── HERO (DARK MODE) ───────────────────────────────────────── */
+[data-theme="dark"] .hero {
+  background: #08080a;
+}
+[data-theme="dark"] .hero-bg {
+  background:
+    radial-gradient(circle 750px at 0% 100%, rgba(220, 13, 29, 0.45) 0%, rgba(150, 10, 20, 0.22) 35%, transparent 70%),
+    radial-gradient(circle 650px at 100% 95%, rgba(190, 12, 24, 0.35) 0%, rgba(110, 6, 14, 0.16) 40%, transparent 68%),
+    radial-gradient(ellipse 75% 40% at 50% 100%, rgba(170, 10, 22, 0.28) 0%, rgba(90, 5, 12, 0.12) 50%, transparent 75%),
+    radial-gradient(circle 500px at 50% 35%, rgba(130, 8, 16, 0.12) 0%, transparent 60%),
+    linear-gradient(180deg, #050103 0%, #080106 40%, #050104 100%);
+}
+[data-theme="dark"] .hero-bg::after {
+  opacity: 1;
+  background: radial-gradient(ellipse 95% 75% at 50% 45%, transparent 40%, rgba(0, 0, 0, 0.72) 100%);
+}
+[data-theme="dark"] .hero-sub {
+  color: #ff3a4d;
+  text-shadow: 0 0 16px rgba(220, 13, 29, 0.5);
+}
+[data-theme="dark"] .hero-title {
+  color: #ffffff;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.85);
+}
+[data-theme="dark"] .hero-desc {
+  color: #a9adc0;
+}
+[data-theme="dark"] .stat-num {
+  color: var(--red-light);
+}
+
 
 /* ── BUTTONS ───────────────────────────────────────────────── */
 .btn-primary {

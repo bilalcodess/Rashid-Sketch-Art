@@ -116,6 +116,7 @@ function createCard(product, isRelated) {
       <h3 class="card-title">${product.title}</h3>
       ${statsHtml}
       <p class="card-price">${priceHtml}</p>
+      <p class="card-delivery"><svg class="card-truck-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg> Free Delivery</p>
       <a href="${buildWaLink(product)}" target="_blank" class="card-buy-btn" onclick="event.stopPropagation();">Buy on WhatsApp</a>
     </div>
   `;

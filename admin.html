@@ -632,17 +632,15 @@
   <span id="toast-msg">Saved successfully!</span>
 </div>
 
-<script src="products.js"></script>
+<script src="products.js?v=tier-2"></script>
 <script>
-// Check localStorage for saved changes, fallback to RSA_PRODUCTS
-let productsData = [];
-const CACHE_KEY = 'rsa_admin_products_v2';
-const savedLocal = localStorage.getItem(CACHE_KEY);
-if (savedLocal) {
-  try { productsData = JSON.parse(savedLocal); } catch(e) { productsData = JSON.parse(JSON.stringify(RSA_PRODUCTS)); }
-} else {
-  productsData = JSON.parse(JSON.stringify(RSA_PRODUCTS));
-}
+// Clear legacy stale cache from mobile storage so old 7500 prices never overwrite GitHub
+localStorage.removeItem('rsa_admin_products_v2');
+localStorage.removeItem('rsa_admin_products');
+
+// Always initialize from live RSA_PRODUCTS as single source of truth
+let productsData = JSON.parse(JSON.stringify(RSA_PRODUCTS));
+const CACHE_KEY = 'rsa_admin_products_v3';
 
 let modifiedIds = new Set();
 let currentFilter = 'all';

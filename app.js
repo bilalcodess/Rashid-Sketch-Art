@@ -6,20 +6,65 @@ const YT_CACHE_KEY = 'rsa_yt_cache';
 const YT_CACHE_TTL = 30 * 60 * 1000; // 30 minutes
 
 // ──────────────────────────────────────────────────
-// ROUTING
+// ROUTING & BROWSER HISTORY
 // ──────────────────────────────────────────────────
-function showPage(name) {
+function showPage(name, push = true) {
   document.getElementById('page-home').style.display    = name === 'home'    ? '' : 'none';
   document.getElementById('page-product').style.display = name === 'product' ? '' : 'none';
   document.getElementById('page-about').style.display   = name === 'about'   ? '' : 'none';
+
+  // Stop video when leaving product page
+  const iframe = document.getElementById('pd-iframe');
+  if (iframe && name !== 'product') {
+    iframe.src = '';
+  }
 
   // Update nav active state
   document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
   const navMap = { home: 'nav-home', about: 'nav-about' };
   if (navMap[name]) document.getElementById(navMap[name])?.classList.add('active');
 
+  if (push) {
+    if (name === 'about') {
+      history.pushState({ page: 'about' }, '', '#about');
+    } else if (name === 'home') {
+      history.pushState({ page: 'home' }, '', window.location.pathname + window.location.search);
+    }
+  }
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+function goBack() {
+  if (window.history.length > 1) {
+    window.history.back();
+  } else {
+    showPage('home');
+  }
+}
+
+// Handle Mobile Phone & Browser Back / Forward buttons
+window.addEventListener('popstate', (event) => {
+  const state = event.state;
+  if (state && state.page === 'product' && state.id) {
+    openProduct(state.id, false);
+  } else if (state && state.page === 'about') {
+    showPage('about', false);
+  } else {
+    const hash = window.location.hash;
+    if (hash.startsWith('#product-')) {
+      const pid = parseInt(hash.replace('#product-', ''), 10);
+      if (pid) {
+        openProduct(pid, false);
+        return;
+      }
+    } else if (hash === '#about') {
+      showPage('about', false);
+      return;
+    }
+    showPage('home', false);
+  }
+});
 
 // ──────────────────────────────────────────────────
 // PRODUCT GRID RENDERING
@@ -195,7 +240,7 @@ function goToSlide(idx) {
 // ──────────────────────────────────────────────────
 // PRODUCT DETAIL
 // ──────────────────────────────────────────────────
-function openProduct(id) {
+function openProduct(id, push = true) {
   const p = RSA_PRODUCTS.find(x => x.id === id);
   if (!p) return;
 
@@ -317,7 +362,10 @@ function openProduct(id) {
   relGrid.innerHTML = '';
   related.forEach(r => relGrid.appendChild(createCard(r, true)));
 
-  showPage('product');
+  showPage('product', false);
+  if (push) {
+    history.pushState({ page: 'product', id: id }, '', '#product-' + id);
+  }
 }
 
 // ──────────────────────────────────────────────────
@@ -363,6 +411,25 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btn) btn.textContent = currentTheme === 'light' ? '\u263E' : '\u2600';
   renderGrid('product-grid', 'all');
   fetchYouTubeStats();
+
+  // Handle direct hash navigation (#product-12 or #about)
+  const initialHash = window.location.hash;
+  if (initialHash.startsWith('#product-')) {
+    const pid = parseInt(initialHash.replace('#product-', ''), 10);
+    if (pid && RSA_PRODUCTS.some(x => x.id === pid)) {
+      history.replaceState({ page: 'home' }, '', window.location.pathname + window.location.search);
+      openProduct(pid, true);
+      return;
+    }
+  } else if (initialHash === '#about') {
+    history.replaceState({ page: 'home' }, '', window.location.pathname + window.location.search);
+    showPage('about', true);
+    return;
+  }
+
+  if (!history.state) {
+    history.replaceState({ page: 'home' }, '', window.location.pathname + window.location.search);
+  }
 });
 
 // ──────────────────────────────────────────────────

@@ -6,6 +6,17 @@ const RSA_CONFIG = {
 
 const RSA_PRODUCTS = [
   {
+    id: 62,
+    title: "Allah name calligraphy with Neon Lights painting",
+    img: "images/Allah_name_calligraphy_with_Neon_Lights_painting_jpeg.jpeg",
+    price: 2299,
+    original_price: 4499,
+    category: "Neon Light",
+    type: "neon",
+    size: "30 42",
+    yt_id: "0xwTxCRtadM", views: 0, likes: 0
+  },
+  {
     id: 61,
     title: "Allah Hu Akbar Calligraphy Gold leaf",
     img: "images/Allah_Hu_Akbar_Calligraphy_Gold_leaf_jpeg.jpeg",

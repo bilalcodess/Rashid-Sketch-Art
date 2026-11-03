@@ -240,7 +240,10 @@
 </footer>
 
 <!-- ======= SCRIPTS ======= -->
-<script src="products.js?v=tier-2"></script>
+<script>
+  // Ensure product updates and new images from admin panel load immediately without cache delay
+  document.write('<script src="products.js?t=' + Math.floor(Date.now() / 30000) + '"><\/script>');
+</script>
 <script src="app.js?v=nav-1"></script>
 </body>
 </html>

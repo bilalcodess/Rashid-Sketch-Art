@@ -24,7 +24,7 @@ const RSA_PRODUCTS = [
     original_price: 4297,
     category: "Neon Light",
     type: "neon",
-    size: "30 42",
+    size: "A3 30x42",
     yt_id: "wvmPgpdvERw", views: 0, likes: 0
   },
   {
@@ -35,7 +35,7 @@ const RSA_PRODUCTS = [
     original_price: 4499,
     category: "Neon Light",
     type: "neon",
-    size: "30 42",
+    size: "A3 30x42",
     yt_id: "0xwTxCRtadM", views: 0, likes: 0
   },
   {

@@ -128,7 +128,14 @@ function formatNumber(n) {
 
 function buildWaLink(p) {
   const phone = p.whatsapp || RSA_CONFIG.whatsapp;
-  const msg = encodeURIComponent(`Hi, I'm interested in "${p.title}" (₹${p.price.toLocaleString('en-IN')}). Is it still available?`);
+  const productUrl = `https://rashidarts.com/#product-${p.id}`;
+  const msg = encodeURIComponent(
+    `Hi Rashid Arts, I want to buy this original painting:\n\n` +
+    `🎨 Title: ${p.title}\n` +
+    `💰 Price: ₹${p.price.toLocaleString('en-IN')}\n` +
+    `🔗 Painting Link: ${productUrl}\n\n` +
+    `Is it still available?`
+  );
   return `https://wa.me/${phone}?text=${msg}`;
 }
 
@@ -190,6 +197,11 @@ function renderGrid(gridId, category) {
         items = RSA_PRODUCTS.slice(0, 12);
       }
     }
+  } else if (category === 'all') {
+    // Canvas paintings ALWAYS at the top, followed by Neon paintings
+    const canvasItems = RSA_PRODUCTS.filter(p => p.category === 'Canvas' || p.type === 'canvas');
+    const neonItems = RSA_PRODUCTS.filter(p => p.category !== 'Canvas' && p.type !== 'canvas');
+    items = [...canvasItems, ...neonItems];
   } else if (category !== 'all') {
     items = RSA_PRODUCTS.filter(p => p.category === category);
   }

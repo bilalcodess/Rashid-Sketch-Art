@@ -684,6 +684,12 @@ function renderList() {
     return true;
   });
 
+  if (currentFilter === 'all' && !search) {
+    const canvasItems = filtered.filter(p => p.category === 'Canvas' || p.type === 'canvas');
+    const neonItems = filtered.filter(p => p.category !== 'Canvas' && p.type !== 'canvas');
+    filtered = [...canvasItems, ...neonItems];
+  }
+
   if (filtered.length === 0) {
     container.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:var(--fg-muted); padding:40px;">No paintings found.</p>';
     return;
@@ -1181,8 +1187,17 @@ async function handleAddNew(e) {
     const mrpVal = document.getElementById('new-mrp').value.trim();
     if (mrpVal) newP.original_price = parseInt(mrpVal, 10);
 
-    // Add to start of list
-    productsData.unshift(newP);
+    // Add to list: Canvas always at top, Neon grouped after Canvas
+    if (newP.category === 'Canvas' || newP.type === 'canvas') {
+      productsData.unshift(newP);
+    } else {
+      const firstNeonIdx = productsData.findIndex(p => p.category !== 'Canvas' && p.type !== 'canvas');
+      if (firstNeonIdx !== -1) {
+        productsData.splice(firstNeonIdx, 0, newP);
+      } else {
+        productsData.push(newP);
+      }
+    }
     markModified(newId);
     initCounts();
     renderList();

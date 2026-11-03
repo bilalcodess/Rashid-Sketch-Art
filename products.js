@@ -8,8 +8,8 @@ const RSA_PRODUCTS = [
   {
     id: 61,
     title: "Allah Hu Akbar Calligraphy Gold leaf",
-    img: "images/Allah_Hu_Akbar_Calligraphy_Gold_leaf1_jpeg.jpeg",
-    img2: "images/Allah_Hu_Akbar_Calligraphy_Gold_leaf2_jpeg.jpeg",
+    img: "images/Allah_Hu_Akbar_Calligraphy_Gold_leaf_jpeg.jpeg",
+    img2: "images/Gold_Leaf_Allah_hu_Akbar_jpeg.jpeg",
     price: 2499,
     original_price: 6499,
     category: "Canvas",

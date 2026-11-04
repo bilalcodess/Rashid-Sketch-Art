@@ -341,7 +341,7 @@ const RSA_PRODUCTS = [
     type: "neon",
     size: "26×35 cm",
     description: "\"God willing\" — the beloved phrase Insha'Allah in luminous neon calligraphy on A4 art paper (26×35 cm). A reminder of faith and surrender, this piece radiates hope and trust in every glowing brushstroke.",
-    yt_id: "EuVGjY-bnK4", views: 9808231, likes: 181231
+    yt_id: "6DiygCc0xM8", views: 9808231, likes: 181231
   },
   {
     id: 23,

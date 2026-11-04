@@ -12,8 +12,8 @@ const RSA_PRODUCTS = [
     img2: "images/SubhanAllah_Calligraphy_Painting_jpeg.jpeg",
     price: 2499,
     original_price: 4499,
-    category: "Neon Light",
-    type: "neon",
+    category: "Canvas",
+    type: "canvas",
     size: "25x32",
     yt_id: "WV7RVjcpxqs", views: 0, likes: 0
   },

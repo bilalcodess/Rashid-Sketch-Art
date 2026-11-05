@@ -6,6 +6,18 @@ const RSA_CONFIG = {
 
 const RSA_PRODUCTS = [
   {
+    id: 67,
+    title: "Bismillahir Rahmannir Rahim",
+    img: "images/1000080326_jpg.jpeg",
+    img2: "images/1000080327_jpg.jpeg",
+    price: 3999,
+    original_price: 6999,
+    category: "Canvas",
+    type: "canvas",
+    size: "25x32",
+    yt_id: "amp8e9xMVmE", views: 0, likes: 0
+  },
+  {
     id: 66,
     title: "Kaaba Painting in night View",
     img: "images/Kaaba_Painting_in_night_view_jpeg.jpeg",

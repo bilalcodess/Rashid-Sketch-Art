@@ -14,6 +14,7 @@ const RSA_PRODUCTS = [
     original_price: 6999,
     category: "Canvas",
     type: "canvas",
+    art_type: "Canvas · Acrylic Painting",
     size: "25x32",
     yt_id: "amp8e9xMVmE", views: 0, likes: 0
   },

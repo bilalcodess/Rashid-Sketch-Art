@@ -324,9 +324,18 @@ function openProduct(id, push = true) {
   // Type badge
   const typeInfo = document.getElementById('pd-type-info');
   const typeBadge = document.getElementById('pd-type-badge');
-  if (p.type) {
-    typeBadge.textContent = p.type === 'canvas' ? 'Canvas · Gold Leaf Painting' : 'Neon Light Calligraphy';
-    typeBadge.className = `pd-type-badge pd-type-${p.type}`;
+  if (p.type || p.category) {
+    if (p.art_type) {
+      typeBadge.textContent = p.art_type;
+    } else if (p.type === 'canvas' || p.category === 'Canvas') {
+      const textToScan = ((p.title || '') + ' ' + (p.description || '')).toLowerCase();
+      const isGoldLeaf = textToScan.includes('gold leaf');
+      typeBadge.textContent = isGoldLeaf ? 'Canvas · Gold Leaf Painting' : 'Canvas · Acrylic Painting';
+    } else {
+      typeBadge.textContent = 'Neon Light Calligraphy';
+    }
+    const badgeClassType = (p.type === 'canvas' || p.category === 'Canvas') ? 'canvas' : 'neon';
+    typeBadge.className = `pd-type-badge pd-type-${badgeClassType}`;
     typeInfo.style.display = '';
   } else {
     typeInfo.style.display = 'none';

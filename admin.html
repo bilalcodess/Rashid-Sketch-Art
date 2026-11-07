@@ -1028,6 +1028,7 @@ async function saveAll() {
     if (p.original_price) codeLines.push(`    original_price: ${p.original_price},`);
     codeLines.push(`    category: ${JSON.stringify(p.category)},`);
     codeLines.push(`    type: ${JSON.stringify(p.type || (p.category === 'Canvas' ? 'canvas' : 'neon'))},`);
+    if (p.art_type) codeLines.push(`    art_type: ${JSON.stringify(p.art_type)},`);
     if (p.size) codeLines.push(`    size: ${JSON.stringify(p.size)},`);
     if (p.description) codeLines.push(`    description: ${JSON.stringify(p.description)},`);
     const ytId = JSON.stringify(p.yt_id || '');
@@ -1167,15 +1168,26 @@ async function handleAddNew(e) {
     else if (ytVal.includes('watch?v=')) ytVal = ytVal.split('watch?v=')[1].split(/[?&]/)[0];
 
     const catVal = document.getElementById('new-category').value;
+    const titleVal = document.getElementById('new-title').value.trim();
+    const descVal = document.getElementById('new-desc').value.trim() || undefined;
+    let artTypeVal = undefined;
+    if (catVal === 'Canvas') {
+      const isGoldLeaf = (titleVal + ' ' + (descVal || '')).toLowerCase().includes('gold leaf');
+      artTypeVal = isGoldLeaf ? 'Canvas · Gold Leaf Painting' : 'Canvas · Acrylic Painting';
+    } else {
+      artTypeVal = 'Neon Light Calligraphy';
+    }
+
     const newP = {
       id: newId,
-      title: document.getElementById('new-title').value.trim(),
+      title: titleVal,
       img: imgPath,
       price: parseInt(document.getElementById('new-price').value, 10) || 0,
       category: catVal,
       type: catVal === 'Canvas' ? 'canvas' : 'neon',
+      art_type: artTypeVal,
       size: document.getElementById('new-size').value.trim() || undefined,
-      description: document.getElementById('new-desc').value.trim() || undefined,
+      description: descVal,
       yt_id: ytVal || '',
       views: 0,
       likes: 0,

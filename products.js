@@ -16,7 +16,7 @@ const RSA_PRODUCTS = [
     type: "canvas",
     art_type: "Canvas · Acrylic Painting",
     size: "25x32",
-    yt_id: "amp8e9xMVmE", views: 0, likes: 0
+    yt_id: "ZFrt2JZGaMk", views: 0, likes: 0
   },
   {
     id: 66,
